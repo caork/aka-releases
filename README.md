@@ -17,6 +17,10 @@ This is AKA's public binary-release and update repository. The source repository
 
 AKA is designed for local work. The desktop application keeps its index and repository snapshots on the machine running it. Search uses BM25 by default; optional semantic search must be explicitly enabled by the user and uses a user-provided local model.
 
+## Documentation
+
+- [New user guide (Simplified Chinese)](docs/getting-started.zh-CN.md): install an agent integration and add the first repository index.
+
 ## Getting Started
 
 1. Open [Releases](https://github.com/caork/aka-releases/releases) and download the formal release asset for your platform.
