@@ -30,17 +30,17 @@ AKA is designed for local work. The desktop application keeps its index and repo
 Formal releases may include only the following assets:
 
 - Windows: signed NSIS `setup.exe` and its updater signature. Portable and single-file Windows executables are not released.
-- macOS: Developer ID-signed and notarized DMG, plus the signed updater archive and signatures required for desktop updates.
+- macOS: Developer ID-signed and notarized DMG, plus the signed update archive and signatures used to verify manual updates.
 - Integrations: Claude Code, Codex, OpenCode, and other supported client configuration packages.
 - Verification metadata: `SHA256SUMS` and `latest.json`.
 
-Pre-release assets are clearly labeled. A macOS ad-hoc test build, for example, is for controlled testing only and is not a notarized production release or an automatic-update target.
+Pre-release assets are clearly labeled. A macOS ad-hoc test build, for example, is for controlled testing only and is not a notarized production release or a manual-update asset.
 
-## Updates And Verification
+## Manual Updates And Verification
 
-AKA checks for desktop updates daily at 05:00 in local time. It also catches up after a late launch or wake from sleep. Updates are verified with the updater signature before installation; transient failures retry with bounded backoff.
+AKA updates manually. When an update is available, download the appropriate asset from the release page and verify it before installation.
 
-Release assets are collected in a draft release and published only when the Windows, macOS, integration, and update metadata are complete. This prevents clients from discovering a partial version during an update check.
+Release assets are collected in a draft release and published only when the Windows, macOS, integration, and update metadata are complete. This prevents users from downloading a partial version.
 
 The desktop update feed is hosted directly on GitHub Releases:
 
