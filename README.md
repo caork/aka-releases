@@ -1,59 +1,34 @@
-# AKA
+# AKA Releases
 
-[简体中文](README.zh-CN.md)
+AKA 的公开发行仓库。源码保存在私有仓库；这里仅承载 Windows 桌面版、Linux
+headless 服务包、更新元数据与使用文档。
 
-AKA is a desktop code knowledge engine for understanding software projects. It turns a repository into a searchable, navigable knowledge base so developers and coding agents can answer questions about code with structure and context rather than isolated text matches.
+## 下载
 
-This is AKA's public binary-release and update repository. The source repository is private; this repository intentionally contains only documentation, release metadata, and signed distribution assets.
+从 [Releases](../../releases) 获取当前版本。每个正式版本同时提供：
 
-## What AKA Does
+- Windows x86_64 普通 NSIS 安装包与签名；
+- Windows x86_64 complete NSIS 安装包与签名，内置五个已签名 semantic packs；
+- Linux x86_64 普通 headless 服务包；
+- Linux x86_64 complete headless 服务包，内置五个已签名 semantic packs；
+- `SHA256SUMS` 与 `latest.json`。
 
-- Indexes a local project into an immutable snapshot, so a search result, graph relationship, source location, and code preview stay consistent with one another.
-- Finds symbols and code quickly with structured filters, full-text search, and exact source verification.
-- Visualizes projects as an interactive graph of folders, files, modules, types, functions, imports, calls, and supported application relationships.
-- Follows definitions and references, shows callers and callees, and estimates the downstream impact of a change.
-- Brings together code context, repository structure, processes, routes, tools, and other supported project concepts in one desktop workspace.
-- Exposes the same local knowledge base to Claude Code, Codex, and OpenCode through MCP integration packages.
+不发布 portable Windows 可执行文件、macOS 包、AppImage、DEB/RPM、Docker 镜像或
+独立客户端配置压缩包。
 
-AKA is designed for local work. The desktop application keeps its index and repository snapshots on the machine running it. Search uses BM25 by default; optional semantic search must be explicitly enabled by the user and uses a user-provided local model.
+## 使用说明
 
-## Documentation
+- [Windows 桌面版](docs/wiki/windows-desktop.md)
+- [Linux headless 服务包](docs/wiki/linux-headless.md)
+- [更新与故障排查](docs/wiki/maintenance.md)
+- [许可证与通知](docs/wiki/licenses.md)
 
-- [New user guide (Simplified Chinese)](docs/getting-started.zh-CN.md): install an agent integration and add the first repository index.
+普通包使用内置 Rust `aka-parse`，无需额外解析器即可索引。complete 包额外内置
+Java、Python、TypeScript/JavaScript/Vue、C/C++、Rust 五个适用于当前平台的签名
+pack，适合离线或受控网络环境。
 
-## Getting Started
+Windows 桌面版从 GitHub、Gitee 的 `latest.json` 顺序检查更新；发现新版本后仅显示
+更新按钮，用户点击后才校验签名、安装并重启。Linux 服务的标准入口是 `aka serve`，
+默认提供 REST/Web `:4111` 与 MCP `:4112/mcp`。
 
-1. Open [Releases](https://github.com/caork/aka-releases/releases) and download the formal release asset for your platform.
-2. Install and start the AKA desktop application.
-3. Import a local folder, Git repository, or archive from the desktop application.
-4. Use Search, Graph, and Symbol views to explore the indexed project.
-5. Optionally install the matching Claude Code, Codex, or OpenCode integration package from the same release. The integration connects to the desktop application's local MCP endpoint, so agents and the desktop app use the same index.
-
-## Release Assets
-
-Formal releases may include only the following assets:
-
-- Windows: signed NSIS `setup.exe` and its updater signature. Portable and single-file Windows executables are not released.
-- macOS: Developer ID-signed and notarized DMG, plus the signed update archive and signatures used to verify manual updates.
-- Integrations: Claude Code, Codex, OpenCode, and other supported client configuration packages.
-- Verification metadata: `SHA256SUMS` and `latest.json`.
-
-Pre-release assets are clearly labeled. A macOS ad-hoc test build, for example, is for controlled testing only and is not a notarized production release or a manual-update asset.
-
-## Manual Updates And Verification
-
-AKA updates manually. When an update is available, download the appropriate asset from the release page and verify it before installation.
-
-Release assets are collected in a draft release and published only when the Windows, macOS, integration, and update metadata are complete. This prevents users from downloading a partial version.
-
-The desktop update feed is hosted directly on GitHub Releases:
-
-`https://github.com/caork/aka-releases/releases/latest/download/latest.json`
-
-You can verify downloaded files against the `SHA256SUMS` asset in the same release. Required third-party and MIT-derived notices are retained with applicable distributions.
-
-## Source Availability
-
-AKA's source code is maintained in a private repository. This public repository is deliberately limited to release documentation, metadata, and binary assets; GitHub-generated source archives here do not contain the AKA application source.
-
-For installation, update, or release-asset questions, please open an issue in this repository.
+发行资产中的第三方通知必须保留。下载后可用同一 Release 的 `SHA256SUMS` 校验文件。

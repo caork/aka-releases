@@ -1,0 +1,81 @@
+# Linux headless 服务包
+
+Linux headless 服务包面向 x86_64 GNU/Linux。它提供 REST/Web 工作区（默认 `:4111`）和 Streamable HTTP MCP（默认 `:4112/mcp`），无需桌面环境或前端依赖。
+
+## 安装与本机启动
+
+从 [GitHub Releases](https://github.com/caork/aka-releases/releases) 或 [Gitee Releases](https://gitee.com/jscao/aka-releases/releases) 下载普通或 complete `aka-headless-*-x86_64-unknown-linux-gnu.tar.gz`，与同一 Release 的 `SHA256SUMS` 一起校验。只需要基础索引时选择普通包；隔离网络或需要五种语言的离线语义增强时选择 complete 包。解压后，包内含 `bin/aka`、README、systemd 示例与 `THIRD_PARTY_NOTICES.md`；complete 包还含适用于 Linux x86_64 的签名 packs。
+
+```bash
+tar -xzf aka-headless-*-x86_64-unknown-linux-gnu.tar.gz
+cd aka-headless-*-x86_64-unknown-linux-gnu
+sudo install -m 0755 bin/aka /usr/local/bin/aka
+sudo install -d -o "$USER" /var/lib/aka
+
+AKA_HOME=/var/lib/aka aka serve \
+  --addr 127.0.0.1:4111 \
+  --mcp-addr 127.0.0.1:4112
+```
+
+确认服务：
+
+```bash
+curl --fail http://127.0.0.1:4111/api/health
+# {"status":"ok","service":"aka-server"}
+```
+
+REST/Web 工作区地址是 `http://127.0.0.1:4111/`，MCP 地址是 `http://127.0.0.1:4112/mcp`。将 `AKA_HOME` 放在持久磁盘上；其中保存注册表、不可变 generations、CAS、搜索索引、图和受管 checkout。
+
+## 可信网络部署
+
+只有在受控网络或已有反向代理/网关时才绑定到外部地址：
+
+```bash
+AKA_HOME=/var/lib/aka aka serve \
+  --addr 0.0.0.0:4111 \
+  --mcp-addr 0.0.0.0:4112 \
+  --public-base-url https://aka.example.internal \
+  --public-mcp-url https://aka-mcp.example.internal/mcp
+```
+
+`--public-base-url` 与 `--public-mcp-url` 用来声明用户实际访问的 HTTPS 地址；使用反向代理、TLS 终止或端口映射时必须设置它们。也可用 `AKA_PUBLIC_BASE_URL` 与 `AKA_PUBLIC_MCP_URL` 设置相同值。代理应保留原始 `Host` 并传递 `X-Forwarded-For`。
+
+普通浏览、搜索和图查询可通过 REST/Web 工作区进行。浏览器写操作只接受精确同源 Origin；跨站请求会被拒绝。
+
+## 远程 REST 管理与管理员密码
+
+远程 REST 的导入、更新、删除、设置和 pack 管理默认关闭。需要从 Web 工作区管理仓库时，必须**同时**启用远程管理开关和设置有效的 Argon2id PHC 哈希：
+
+```bash
+AKA_ALLOW_REMOTE_ADMIN=1 \
+AKA_ADMIN_PASSWORD_HASH='$argon2id$v=19$<salt>$<hash>' \
+AKA_HOME=/var/lib/aka aka serve \
+  --addr 0.0.0.0:4111 \
+  --mcp-addr 127.0.0.1:4112 \
+  --public-base-url https://aka.example.internal
+```
+
+`--allow-remote-admin` 与 `AKA_ALLOW_REMOTE_ADMIN=1` 等价。开关存在但哈希不是有效 Argon2id PHC 时，服务会拒绝启动。使用团队的密码/密钥管理工具生成哈希，并仅将哈希交给服务管理器的受保护环境；不要将明文密码或哈希写入命令历史、JSON、仓库或 unit 文件。
+
+门户只会在 **HTTPS** 或 loopback HTTP 下显示和发送管理员密码，远程明文 HTTP 不允许输入密码。管理员认证仅保护 REST 管理面 `:4111`；它**不保护** `:4112/mcp`。MCP 仍可执行分析、导入、更新和自动索引，因此应只绑定可信网络，或在它前面放置独立的认证网关。
+
+## complete 包的离线 packs
+
+headless 服务包内置 Rust `aka-parse`，即使没有可选 pack 也能索引和查询。complete 包已经带有 Java、Python、TypeScript/JavaScript/Vue、C/C++、Rust 的适用签名 `.aka-pack`，离线使用时从解压后的包中导入即可，无需访问下载站。普通包在隔离网络中需要额外 pack 时，可在联网机器从 [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 或 [Gitee Packs Releases](https://gitee.com/jscao/aka-packs/releases) 下载所需 `.aka-pack`，连同其 `SHA256SUMS` 一起转移到目标主机。
+
+导入 Java pack 的示例如下；将 `java` 和文件名替换为其他语言的 Pack ID 与对应文件。服务只接受与内置合同、目标平台和 Pack ID 匹配的已签名文件。
+
+```bash
+curl --fail-with-body \
+  --request POST \
+  --form 'file=@aka-pack-java-0.1.0-any-any.aka-pack;type=application/octet-stream' \
+  http://127.0.0.1:4111/api/semantic-packs/java/import
+```
+
+用 `GET /api/semantic-packs` 查看状态。远程主机执行此操作时适用上一节的 REST 管理认证。选择 `.aka-pack`，不要导入 raw exporter 的 `.zip`、`.tgz` 或 `.tar.gz`。C/C++ 与 Rust 选择 `linux-x86_64`；Java、Python、TypeScript/JavaScript/Vue 使用 `any-any`。
+
+## 更新
+
+停掉服务、替换为同一 Release 解压后的 `bin/aka`，再启动服务。升级前备份 `AKA_HOME`，升级后先访问 health endpoint，再检查已注册仓库和 packs。产品安装包和语言 packs 分属不同发布仓库：产品更新来自 `aka-releases`，pack 更新来自 `aka-packs`。两者都应从同版本或已验证的官方镜像取得。
+
+更多诊断步骤见 [更新与故障排查](maintenance.md)，许可文件说明见 [许可证与通知](licenses.md)。
