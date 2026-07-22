@@ -61,9 +61,9 @@ AKA_HOME=/var/lib/aka aka serve \
 
 ## complete 包的离线 packs
 
-headless 服务包内置 Rust `aka-parse`，即使没有可选 pack 也能索引和查询。complete 包已经带有 Java、Python、TypeScript/JavaScript/Vue、C/C++、Rust 的适用签名 `.aka-pack`，离线使用时从解压后的包中导入即可，无需访问下载站。普通包在隔离网络中需要额外 pack 时，可在联网机器从 [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 或 [Gitee Packs Releases](https://gitee.com/jscao/aka-packs/releases) 下载所需 `.aka-pack`，连同其 `SHA256SUMS` 一起转移到目标主机。
+headless 服务包内置 Rust `aka-parse`，即使没有可选 pack 也能索引和查询。complete 包已经带有 Java、Python、TypeScript/JavaScript/Vue、C/C++、Rust 的适用签名 `.aka-pack`；首次运行 `aka serve` 时会自动校验并导入，后续启动会幂等跳过相同版本，无需访问下载站或手工调用导入接口。单个 pack 导入失败不会阻止服务启动或基础索引，可用 `GET /api/semantic-packs` 查看状态。普通包在隔离网络中需要额外 pack 时，可在联网机器从 [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 或 [Gitee Packs Releases](https://gitee.com/jscao/aka-packs/releases) 下载所需 `.aka-pack`，连同其 `SHA256SUMS` 一起转移到目标主机。
 
-导入 Java pack 的示例如下；将 `java` 和文件名替换为其他语言的 Pack ID 与对应文件。服务只接受与内置合同、目标平台和 Pack ID 匹配的已签名文件。
+普通包手工导入 Java pack 的示例如下；将 `java` 和文件名替换为其他语言的 Pack ID 与对应文件。complete 包不需要执行此步骤。服务只接受与内置合同、目标平台和 Pack ID 匹配的已签名文件。
 
 ```bash
 curl --fail-with-body \

@@ -29,7 +29,7 @@
 
 普通包的在线环境：打开 **Settings > Semantic packs**，按对应语言选择安装。AKA 会从 GitHub 再到 Gitee 检查可更新的规则 pack；发现更新只会提示，必须由你点击安装。
 
-complete 包的离线环境：安装后在 **Settings > Semantic packs** 使用包内置的离线 `.aka-pack`；不需要联网下载。普通包的隔离网络部署也可从 [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 或 [Gitee Packs Releases](https://gitee.com/jscao/aka-packs/releases) 转移匹配的签名 `.aka-pack`，然后在对应语言点击 **Import local package**。选择 `.aka-pack` 本身，不要选择发布审计使用的 raw exporter 文件。导入会校验 pack 身份、平台、文件大小、SHA-256 和 Ed25519 签名；未通过校验的文件不会安装。
+complete 包首次启动时会自动校验并导入随安装包提供的五个离线 `.aka-pack`；重复启动会幂等跳过已经安装的相同版本，不需要联网或手工选文件。导入失败不会阻止桌面版启动或基础索引，可在 **Settings > Semantic packs** 查看状态并按提示处理。普通包的隔离网络部署也可从 [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 或 [Gitee Packs Releases](https://gitee.com/jscao/aka-packs/releases) 转移匹配的签名 `.aka-pack`，然后在对应语言点击 **Import local package**。选择 `.aka-pack` 本身，不要选择发布审计使用的 raw exporter 文件。导入会校验 pack 身份、平台、文件大小、SHA-256 和 Ed25519 签名；未通过校验的文件不会安装。
 
 原生 C/C++、Rust packs 必须选择 `windows-x86_64` 文件；`any-any` 的 Java、Python、TypeScript packs 可用于 Windows x86_64 和 Linux x86_64。
 
