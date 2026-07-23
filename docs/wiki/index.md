@@ -21,7 +21,7 @@ Wiki 面向使用者和管理员；源码构建、内部运行时和发布流水
 | 选择 | 适用场景 | 包含内容 |
 | --- | --- | --- |
 | 普通包 | 能访问互联网，或只需要基础代码结构、搜索和图 | Windows 普通 NSIS `setup.exe`，或 Linux 普通 `aka-headless-*.tar.gz`。内置 Rust `aka-parse` 可立即索引，不需要额外解析器。 |
-| complete 包 | 隔离网络、受控网络，或需要在首轮索引就使用 Java、Python、TypeScript/JavaScript/Vue、C/C++、Rust 的语义增强 | Windows complete NSIS `setup.exe`，或 Linux complete `aka-headless-*.tar.gz`。包内置当前发布合同指定的五个已签名 `.aka-pack`，不需要首次联网下载。 |
+| complete 包 | 隔离网络、受控网络，或需要在首轮索引就使用 Java、Python、TypeScript/JavaScript/Vue、C/C++、Rust 的语义增强 | Windows complete NSIS `setup.exe`，或 Linux complete 同版本 `base`/`packs` 两个 `aka-headless-complete-*.tar.gz`。Linux 两卷必须依次解压到同一目录；完整目录内置五个已签名 `.aka-pack`，不需要首次联网下载。 |
 
 普通包不会降低数据一致性：每次成功索引都会发布同一不可变 generation 的源码、图和搜索结果。complete 包只是把可选的语义分析器预先带到离线环境；没有 pack 时仍使用内置 Rust `aka-parse`。当前 complete 包固定包含 `packs-v0.1.11`（或发布合同明确升级后的版本）中适用于目标平台的 Java、Python、TypeScript/JavaScript/Vue、C/C++、Rust packs；不包含 raw exporter 或未签名 payload。
 
