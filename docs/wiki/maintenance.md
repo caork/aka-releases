@@ -4,12 +4,12 @@
 
 | 现象 | 处理方式 |
 | --- | --- |
-| Windows 没有更新按钮 | 更新检查在启动时和每 30 分钟运行一次。确认能访问 GitHub 或 Gitee 的 `aka-releases`，重启后等待检查完成。没有新版本时不会显示按钮。普通包与 complete 包分别只接受对应产品形态的更新。 |
+| Windows 没有更新按钮 | 更新检查在启动时和每 30 分钟运行一次。确认能访问 GitHub 或 Gitee 的 `aka-releases`，重启后等待检查完成。没有新版本时不会显示按钮。当前 Windows 只发布普通桌面安装包；`v0.1.45` complete 是历史发行。 |
 | Windows 更新校验失败 | 不要绕过签名校验。重新从官方 Release 下载对应 `setup.exe`，用 `SHA256SUMS` 核对；持续失败时切换 GitHub/Gitee 镜像。 |
 | Linux 升级后无法启动 | 保留上一版 `bin/aka`，检查启动日志和 `AKA_HOME` 的访问权限。确认下载的是 Linux x86_64 headless 服务包，并先用 `/api/health` 验证新版本。 |
 | pack 显示有更新 | pack 的更新提示不会自动下载。到 **Settings > Semantic packs** 选择安装，或在离线环境导入受信 `.aka-pack`。 |
 
-不要把 Windows 安装程序、Linux 服务包和 packs 与不同版本的 `SHA256SUMS` 混用。产品更新仅来自 `aka-releases`；可选语言 packs 仅来自 `aka-packs`。
+不要把 Windows 安装程序、Linux 服务包和 packs 与不对应来源 Release 的 `SHA256SUMS` 混用。产品的 `SHA256SUMS` 可来自 GitHub 或 Gitee 的 `aka-releases`；可选语言 packs、规则包及其 `SHA256SUMS` 仅来自 GitHub `aka-packs`，当前没有 Gitee packs 镜像。
 
 ## <a id="indexing"></a>索引
 
@@ -17,7 +17,7 @@
 | --- | --- |
 | 首次索引超过 1500 秒 | Windows 在 **Settings > Indexing** 提高时间预算，或为本次启动设置 `AKA_INDEX_MAX_SECS`。Linux 检查服务的环境变量、磁盘空间与 `AKA_HOME` 所在磁盘性能。 |
 | 索引只显示部分语义关系 | 基础 Rust `aka-parse` generation 已可用；检查该仓库的 Semantic packs 是否已安装、启用并满足项目运行条件。语义 pack 超时或跳过不会破坏基础索引。 |
-| Java/Python/TS/C++/Rust 结果不完整 | 检查对应 pack 与前置工具：JDK 21、Node.js 16+/18+、Python 虚拟环境、`compile_commands.json`、Cargo/Rust toolchain。然后重新分析仓库。 |
+| Java/Python/TS/C++/Rust 结果不完整 | 检查对应 pack 与前置工具：JDK 17+、`scip-typescript` 使用 Node.js 18 或 20、Python 虚拟环境、`compile_commands.json`、Cargo/Rust toolchain。Linux Python pack 仅支持 `linux-x86_64`；Windows Python/C++ 需要外部 `index.scip`。然后重新分析仓库。 |
 | 数据看起来过旧 | 对仓库执行更新/重新分析。不要手工改动 `AKA_HOME` 下的 generation、CAS、图或索引文件。 |
 
 默认 embedding 关闭；未配置本地模型时搜索仍是 BM25。这不是索引故障。
@@ -26,8 +26,8 @@
 
 | 现象 | 处理方式 |
 | --- | --- |
-| 导入被拒绝 | 确认选择的是 `.aka-pack`，不是 raw exporter；确认 Pack ID、版本和平台匹配。C/C++、Rust 要选择正确的 `windows-x86_64` 或 `linux-x86_64`。 |
-| 签名或哈希错误 | 删除下载文件，从官方 GitHub/Gitee 镜像重新下载，并按同一 Release 的 `SHA256SUMS` 核对。不要关闭签名校验。 |
+| 导入被拒绝 | 确认选择的是签名 `.aka-pack`，不是任意 archive；确认 Pack ID、版本和平台匹配。C/C++ pack 只支持 `linux-x86_64`；Rust 选择正确的 Windows 或 Linux 目标。 |
+| 签名或哈希错误 | 产品文件从 GitHub 或 Gitee 的 `aka-releases` 重新下载，并用其 `SHA256SUMS` 核对；pack 文件仅从 GitHub `aka-packs` 重新下载，并用该 pack release 的 `SHA256SUMS` 核对。不要关闭签名校验。 |
 | complete 包里的 pack 无法使用 | 确认导入的是解压后的 complete 包内的已签名 `.aka-pack`，且 C/C++、Rust 文件为本机平台。校验错误时，重新下载同一 Release 的 complete 包并核对 `SHA256SUMS`。 |
 | 普通包的离线环境无法安装 pack | 在联网机器下载签名 `.aka-pack` 和校验清单，再通过受控介质转移；在 Windows 使用 **Import local package**，在 Linux 通过受保护的 REST 管理面导入。 |
 
