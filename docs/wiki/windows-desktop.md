@@ -2,7 +2,7 @@
 
 ## 安装
 
-1. 在 [GitHub Releases](https://github.com/caork/aka-releases/releases) 或 [Gitee Releases](https://gitee.com/jscao/aka-releases/releases) 下载当前版本的 Windows x86_64 普通或 complete `setup.exe`。需要断网或首轮就使用五种语义 pack 时选择 complete；否则选择体积更小的普通包。
+1. 在 [GitHub Releases](https://github.com/caork/aka-releases/releases) 或 [Gitee Releases](https://gitee.com/jscao/aka-releases/releases) 下载当前版本的 Windows x86_64 普通 `setup.exe`。Windows 暂不发行 complete；Java、TypeScript/JavaScript、Rust 可在安装后按需安装或本地导入，Python 与 C/C++ 可导入外部预生成的 `index.scip`。
 2. 可选：用同一 Release 的 `SHA256SUMS` 核对安装文件哈希。
 3. 运行 NSIS 安装程序并完成安装。正式发布只提供该安装方式。
 4. 启动 AKA，使用 **Add repository** 导入本地目录、Git 地址或 zip；索引完成后即可在 Search、Graph、Symbol 中浏览同一份 generation。
@@ -15,23 +15,23 @@
 
 大仓库第一次索引可能接近预算。遇到预算耗尽时，先阅读 [故障排查](maintenance.md#indexing)；不要反复删除应用数据。安装了语义 pack 的仓库若某项增强超时，基础 generation 仍会保持可用，界面会标记缺少的可选能力。
 
-## Java、Python、TypeScript、C++ 和 Rust packs
+## Java、TypeScript、Rust packs 与外部 SCIP
 
 语义 pack 为语言关系和符号精度提供增强。安装后默认启用；也可以在仓库设置中单独关闭。选择与你的项目匹配的 pack：
 
 | 项目语言 | Pack ID | 准备条件 |
 | --- | --- | --- |
-| Java | `java` | JDK 21；项目依赖应可由 Maven、Gradle 或既有构建环境解析。 |
-| Python | `python` | Node.js 16+；推荐配置项目虚拟环境。 |
-| TypeScript / JavaScript / Vue | `typescript` | Node.js 18+；项目通常应已有 `node_modules`。Vue 使用同一个 Volar-aware pack。 |
-| C / C++ | `cpp` | 选择 Windows x86_64 pack；提供 `compile_commands.json` 可得到更完整精度。 |
+| Java | `java` | JDK 17 或更高；项目依赖应可由 Maven、Gradle 或既有构建环境解析。 |
+| Python | 无 Windows pack | 上游 `scip-python` 0.6.6 的 Windows path-separator 修复尚未合并；可导入外部预生成的 `index.scip`。 |
+| TypeScript / JavaScript | `typescript` | Node.js 18 或 20；项目通常应已有 `node_modules`。Vue 仅由 Tier-0 和 `<script>` 内 TS/JS 能力覆盖。 |
+| C / C++ | 无 Windows pack | 上游没有 Windows 原生支持；可导入外部预生成的 `index.scip`。 |
 | Rust | `rust` | 本机 Cargo/Rust toolchain，供 metadata、build script 与 proc-macro 使用。 |
 
-普通包的在线环境：打开 **Settings > Semantic packs**，按对应语言选择安装。AKA 会从 GitHub 再到 Gitee 检查可更新的规则 pack；发现更新只会提示，必须由你点击安装。
+普通包的在线环境：打开 **Settings > Semantic packs**，按对应语言选择安装。AKA 只从 GitHub `aka-packs` 检查可更新的语义 pack、规则包和其他非产品资产；发现更新只会提示，必须由你点击安装。
 
-complete 包首次启动时会自动校验并导入随安装包提供的五个离线 `.aka-pack`；重复启动会幂等跳过已经安装的相同版本，不需要联网或手工选文件。导入失败不会阻止桌面版启动或基础索引，可在 **Settings > Semantic packs** 查看状态并按提示处理。普通包的隔离网络部署也可从 [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 或 [Gitee Packs Releases](https://gitee.com/jscao/aka-packs/releases) 转移匹配的签名 `.aka-pack`，然后在对应语言点击 **Import local package**。选择 `.aka-pack` 本身，不要选择发布审计使用的 raw exporter 文件。导入会校验 pack 身份、平台、文件大小、SHA-256 和 Ed25519 签名；未通过校验的文件不会安装。
+Windows 暂不发行 complete。86,321,571-byte 的 Java 上游 payload 加上 desktop、Rust 和 TypeScript/JavaScript 会超过 GitHub/Gitee 的 100 MB 单附件限制；解决该公开双仓限制后才会恢复。Java、TypeScript/JavaScript、Rust 可从 GitHub [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 转移匹配的签名 `.aka-pack`，然后在对应语言点击 **Import local package**；当前没有 Gitee packs 镜像。选择 `.aka-pack` 本身，不要选择任意 archive。导入会校验 pack 身份、平台、文件大小、SHA-256 和 Ed25519 签名；未通过校验的文件不会安装。`v0.1.45` Windows complete 与 `packs-v0.1.11` 派生包是已公开历史资产。
 
-原生 C/C++、Rust packs 必须选择 `windows-x86_64` 文件；`any-any` 的 Java、Python、TypeScript packs 可用于 Windows x86_64 和 Linux x86_64。
+Windows 只为 Java、TypeScript/JavaScript、Rust 提供受支持 pack；Python 与 C/C++ 使用外部预生成 `index.scip` 时保留其外部 producer provenance。
 
 ## 更新
 
