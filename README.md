@@ -10,7 +10,7 @@ headless 服务包、更新元数据与使用文档。
 - Windows x86_64 普通 NSIS 安装包与签名；
 - Windows x86_64 complete NSIS 安装包与签名，内置五个已签名 semantic packs；
 - Linux x86_64 普通 headless 服务包；
-- Linux x86_64 complete headless 服务包，内置五个已签名 semantic packs；
+- Linux x86_64 complete headless 服务包固定 `base`/`packs` 双卷，叠加后内置五个已签名 semantic packs；
 - `SHA256SUMS` 与 `latest.json`。
 
 不发布 portable Windows 可执行文件、macOS 包、AppImage、DEB/RPM、Docker 镜像或
@@ -25,7 +25,8 @@ headless 服务包、更新元数据与使用文档。
 
 普通包使用内置 Rust `aka-parse`，无需额外解析器即可索引。complete 包额外内置
 Java、Python、TypeScript/JavaScript/Vue、C/C++、Rust 五个适用于当前平台的签名
-pack，适合离线或受控网络环境。
+pack，适合离线或受控网络环境。Linux complete 必须同时下载同版本的 `base` 与
+`packs` 两个 `.tar.gz`，依次解压到同一目录；每卷严格小于 95 MiB。
 
 Windows 桌面版从 GitHub、Gitee 的 `latest.json` 顺序检查更新；发现新版本后仅显示
 更新按钮，用户点击后才校验签名、安装并重启。Linux 服务的标准入口是 `aka serve`，
