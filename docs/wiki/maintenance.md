@@ -4,12 +4,12 @@
 
 | 现象 | 处理方式 |
 | --- | --- |
-| Windows 没有更新按钮 | 更新检查在启动时和每 30 分钟运行一次。确认能访问 GitHub 或 Gitee 的 `aka-releases`，重启后等待检查完成。没有新版本时不会显示按钮。当前 Windows 只发布普通桌面安装包；`v0.1.45` complete 是历史发行。 |
+| Windows 没有更新按钮 | 更新检查在启动时和每 30 分钟运行一次。确认能访问 GitHub 或 Gitee 的 `aka-releases`，重启后等待检查完成。没有新版本时不会显示按钮。普通 Windows 安装包是 updater 目标；GitHub 另提供单体 complete，Gitee 保留普通包。 |
 | Windows 更新校验失败 | 不要绕过签名校验。重新从官方 Release 下载对应 `setup.exe`，用 `SHA256SUMS` 核对；持续失败时切换 GitHub/Gitee 镜像。 |
 | Linux 升级后无法启动 | 保留上一版 `bin/aka`，检查启动日志和 `AKA_HOME` 的访问权限。确认下载的是 Linux x86_64 headless 服务包，并先用 `/api/health` 验证新版本。 |
 | pack 显示有更新 | pack 的更新提示不会自动下载。到 **Settings > Semantic packs** 选择安装，或在离线环境导入受信 `.aka-pack`。 |
 
-不要把 Windows 安装程序、Linux 服务包和 packs 与不对应来源 Release 的 `SHA256SUMS` 混用。产品的 `SHA256SUMS` 可来自 GitHub 或 Gitee 的 `aka-releases`；可选语言 packs、规则包及其 `SHA256SUMS` 仅来自 GitHub `aka-packs`，当前没有 Gitee packs 镜像。
+不要把 Windows 安装程序、Linux 服务包和 packs 与不对应来源 Release 的 `SHA256SUMS` 混用。GitHub Windows complete 必须使用 GitHub `aka-releases` 的 `SHA256SUMS`，Gitee 普通 Windows 包必须使用 Gitee 的；共享 Linux 资产可使用下载来源对应的清单。可选语言 packs、规则包及其 `SHA256SUMS` 仅来自 GitHub `aka-packs`，当前没有 Gitee packs 镜像。
 
 ## <a id="indexing"></a>索引
 
