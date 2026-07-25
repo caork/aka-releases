@@ -2,8 +2,8 @@
 
 ## 安装
 
-1. 在 [GitHub Releases](https://github.com/caork/aka-releases/releases) 或 [Gitee Releases](https://gitee.com/jscao/aka-releases/releases) 下载当前版本的 Windows x86_64 普通 `setup.exe`。Windows 暂不发行 complete；Java、TypeScript/JavaScript、Rust 可在安装后按需安装或本地导入，Python 与 C/C++ 可导入外部预生成的 `index.scip`。
-2. 可选：用同一 Release 的 `SHA256SUMS` 核对安装文件哈希。
+1. 在 [GitHub Releases](https://github.com/caork/aka-releases/releases) 或 [Gitee Releases](https://gitee.com/jscao/aka-releases/releases) 下载当前版本的普通 `setup.exe`。两端提供相同的正式 Windows 安装包。
+2. 可选：只用同一来源 Release 的 `SHA256SUMS` 核对安装文件哈希。
 3. 运行 NSIS 安装程序并完成安装。正式发布只提供该安装方式。
 4. 启动 AKA，使用 **Add repository** 导入本地目录、Git 地址或 zip；索引完成后即可在 Search、Graph、Symbol 中浏览同一份 generation。
 
@@ -29,7 +29,7 @@
 
 普通包的在线环境：打开 **Settings > Semantic packs**，按对应语言选择安装。AKA 只从 GitHub `aka-packs` 检查可更新的语义 pack、规则包和其他非产品资产；发现更新只会提示，必须由你点击安装。
 
-Windows 暂不发行 complete。86,321,571-byte 的 Java 上游 payload 加上 desktop、Rust 和 TypeScript/JavaScript 会超过 GitHub/Gitee 的 100 MB 单附件限制；解决该公开双仓限制后才会恢复。Java、TypeScript/JavaScript、Rust 可从 GitHub [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 转移匹配的签名 `.aka-pack`，然后在对应语言点击 **Import local package**；当前没有 Gitee packs 镜像。选择 `.aka-pack` 本身，不要选择任意 archive。导入会校验 pack 身份、平台、文件大小、SHA-256 和 Ed25519 签名；未通过校验的文件不会安装。`v0.1.45` Windows complete 与 `packs-v0.1.11` 派生包是已公开历史资产。
+普通 Windows 包可从 GitHub [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 转移匹配的签名 `.aka-pack`，然后在对应语言点击 **Import local package**；当前没有 Gitee packs 镜像。选择 `.aka-pack` 本身，不要选择任意 archive。导入会校验 pack 身份、平台、文件大小、SHA-256 和 Ed25519 签名；未通过校验的文件不会安装。`v0.1.45` 与 `v0.1.47` 的 Windows complete 是已公开历史资产，但当前正式版本不再发布 Windows complete。
 
 Windows 只为 Java、TypeScript/JavaScript、Rust 提供受支持 pack；Python 与 C/C++ 使用外部预生成 `index.scip` 时保留其外部 producer provenance。
 
