@@ -4,10 +4,10 @@ Linux headless 服务包面向 x86_64 GNU/Linux。它提供 REST/Web 工作区�
 
 ## 安装与本机启动
 
-从 [GitHub Releases](https://github.com/caork/aka-releases/releases) 或 [Gitee Releases](https://gitee.com/jscao/aka-releases/releases) 下载普通 `aka-headless-<版本>-x86_64-unknown-linux-gnu.tar.gz`，或同时下载 complete 的同版本 `base` 与 `packs` 两个 `.tar.gz`，并用同一 Release 的 `SHA256SUMS` 校验。只需要基础索引时选择普通包；隔离网络或需要五种语言的离线语义增强时选择 complete 包。普通包解压一次即可；complete 必须先解压 `base`，再把 `packs` 解压到同一目标目录。两个卷都是真正可独立解压的 tar 包、均严格小于 95 MiB，但只有叠加后的目录才是完整产品。计划中的 upstream-only `packs-v0.1.12` 完整目录含 `bin/aka`、README、systemd 示例、`THIRD_PARTY_NOTICES.md` 与适用于 Linux x86_64 的 Java、Python、TypeScript/JavaScript、C/C++、Rust 五个签名 packs；`packs-v0.1.11` 的派生包是已公开历史资产。
+从 [GitHub Releases](https://github.com/caork/aka-releases/releases) 或 [Gitee Releases](https://gitee.com/jscao/aka-releases/releases) 下载普通 `aka-headless-<版本>-x86_64-unknown-linux-gnu.tar.gz`，或同时下载 complete 的同版本 `base` 与 `packs` 两个 `.tar.gz`，并用同一 Release 的 `SHA256SUMS` 校验。只需要基础索引时选择普通包；隔离网络或需要五种语言的离线语义增强时选择 complete 包。普通包解压一次即可；complete 必须先解压 `base`，再把 `packs` 解压到同一目标目录。两个卷都是真正可独立解压的 tar 包、均严格小于 95 MiB，但只有叠加后的目录才是完整产品。当前 upstream-only `packs-v0.1.12` 完整目录含 `bin/aka`、README、systemd 示例、`THIRD_PARTY_NOTICES.md` 与适用于 Linux x86_64 的 Java、Python、TypeScript/JavaScript、C/C++、Rust 五个签名 packs；`packs-v0.1.11` 的派生包是已公开历史资产。
 
 ```bash
-version=0.1.45 # 替换为 Release 版本
+version=0.1.46 # 替换为 Release 版本
 tar -xzf "aka-headless-${version}-x86_64-unknown-linux-gnu.tar.gz"
 cd "aka-headless-${version}-x86_64-unknown-linux-gnu"
 sudo install -m 0755 bin/aka /usr/local/bin/aka
@@ -21,7 +21,7 @@ AKA_HOME=/var/lib/aka aka serve \
 complete 双卷的解压方式如下；两个归档内的顶层目录名相同，第二条命令只补入其余内容：
 
 ```bash
-version=0.1.45 # 替换为 Release 版本
+version=0.1.46 # 替换为 Release 版本
 tar -xzf "aka-headless-complete-${version}-base-x86_64-unknown-linux-gnu.tar.gz"
 tar -xzf "aka-headless-complete-${version}-packs-x86_64-unknown-linux-gnu.tar.gz"
 cd "aka-headless-complete-${version}-x86_64-unknown-linux-gnu"
@@ -71,7 +71,7 @@ AKA_HOME=/var/lib/aka aka serve \
 
 ## complete 包的离线 packs
 
-headless 服务包内置 Rust `aka-parse`，即使没有可选 pack 也能索引和查询。计划中的 upstream-only complete 包带有 Java、Python、TypeScript/JavaScript、C/C++、Rust 的适用签名 `.aka-pack`；Vue 仅有 Tier-0 和 `<script>` 内 TS/JS 能力。首次运行 `aka serve` 时会自动校验并导入，后续启动会幂等跳过相同版本，无需访问下载站或手工调用导入接口。单个 pack 导入失败不会阻止服务启动或基础索引，可用 `GET /api/semantic-packs` 查看状态。普通包在隔离网络中需要额外 pack 时，可在联网机器从 GitHub [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 下载所需 `.aka-pack`，连同该 pack release 的 `SHA256SUMS` 一起转移到目标主机；当前没有 Gitee packs 镜像。
+headless 服务包内置 Rust `aka-parse`，即使没有可选 pack 也能索引和查询。当前 upstream-only complete 包带有 `packs-v0.1.12` 的 Java、Python、TypeScript/JavaScript、C/C++、Rust 适用签名 `.aka-pack`；Vue 仅有 Tier-0 和 `<script>` 内 TS/JS 能力。首次运行 `aka serve` 时会自动校验并导入，后续启动会幂等跳过相同版本，无需访问下载站或手工调用导入接口。单个 pack 导入失败不会阻止服务启动或基础索引，可用 `GET /api/semantic-packs` 查看状态。普通包在隔离网络中需要额外 pack 时，可在联网机器从 GitHub [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 下载所需 `.aka-pack`，连同该 pack release 的 `SHA256SUMS` 一起转移到目标主机；当前没有 Gitee packs 镜像。
 
 普通包手工导入 Java pack 的示例如下；将 `java` 和文件名替换为其他语言的 Pack ID 与对应文件。complete 包不需要执行此步骤。服务只接受与内置合同、目标平台和 Pack ID 匹配的已签名文件。
 
