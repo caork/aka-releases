@@ -16,21 +16,20 @@ Wiki 面向使用者和管理员；源码构建、内部运行时和发布流水
 
 从 [GitHub Releases](https://github.com/caork/aka-releases/releases) 或
 [Gitee Releases](https://gitee.com/jscao/aka-releases/releases) 下载相同版本的正式资产。
-两端共享 Linux 资产；GitHub 额外提供 Windows complete，Gitee 只提供普通 Windows 安装包。不要混用来源不同的 Windows 文件与 `SHA256SUMS`。
+从下一个正式版本起，两端只共享 Linux complete 双卷；Windows complete 及其 updater `.sig` 仅在 GitHub 发布，Gitee 不提供 Windows 二进制。不要混用来源不同的文件与 `SHA256SUMS`。
 
 | 选择 | 适用场景 | 包含内容 |
 | --- | --- | --- |
-| 普通包 | 能访问互联网，或只需要基础代码结构、搜索和图 | Windows 普通 NSIS `setup.exe`，或 Linux 普通 `aka-headless-*.tar.gz`。内置 Rust `aka-parse` 可立即索引，不需要额外解析器。 |
 | Linux complete 包 | 隔离网络、受控网络，或需要在首轮索引就使用上游语义增强 | Linux complete 同版本 `base`/`packs` 两个 `aka-headless-complete-*.tar.gz`，包含 Java、Python、TypeScript/JavaScript、C/C++、Rust。两卷必须依次解压到同一目录；完整目录内置五个已签名 `.aka-pack`，不需要首次联网下载。 |
-| GitHub Windows complete 包 | Windows 隔离网络、受控网络，或需要首轮索引即使用可用的 Windows 语义增强 | GitHub 单体 `aka-desktop-complete-*-setup.exe`，不带 `.sig`；用 GitHub `SHA256SUMS` 校验，内置 Java、TypeScript/JavaScript、Rust 三个各自已签名 `.aka-pack`。Python 与 C/C++ 没有 Windows pack，仍可导入外部 `index.scip`。 |
+| GitHub Windows complete 包 | Windows 用户 | GitHub 单体 `aka-desktop-complete-*-setup.exe` 及 detached `.sig`；用 GitHub `SHA256SUMS` 校验，内置 Java、TypeScript/JavaScript、Rust 三个各自已签名 `.aka-pack`。Python 与 C/C++ 没有 Windows pack，仍可导入外部 `index.scip`。 |
 
-普通包不会降低数据一致性：每次成功索引都会发布同一不可变 generation 的源码、图和搜索结果。Linux complete 包只是把可选的上游语义工具预先带到离线环境；没有 pack 时仍使用内置 Rust `aka-parse`。已发布的 Linux complete 基线包含 `packs-v0.1.13` 的 Java、Python、TypeScript/JavaScript、C/C++、Rust，其中 C/C++ 使用官方 `scip-clang` v0.3.3。Linux 包最低要求 glibc 2.28。GitHub Windows complete 包含 Java、TypeScript/JavaScript、Rust；普通 Windows 包仍可按需安装或本地导入这三个 pack。Python 与 C/C++ 可导入外部预生成的 `index.scip`。Vue 仅有 Tier-0 和 `<script>` 内 TS/JS 能力，不包含 Vue SCIP pack。complete 包不包含 raw exporter 或未签名 payload。
+complete 包不会降低数据一致性：每次成功索引都会发布同一不可变 generation 的源码、图和搜索结果。Linux complete 包只是把可选的上游语义工具预先带到离线环境；没有 pack 时仍使用内置 Rust `aka-parse`。已发布的 Linux complete 基线包含 `packs-v0.1.13` 的 Java、Python、TypeScript/JavaScript、C/C++、Rust，其中 C/C++ 使用官方 `scip-clang` v0.3.3。Linux 包最低要求 glibc 2.28。GitHub Windows complete 包含 Java、TypeScript/JavaScript、Rust；需要更换或补充时可从 GitHub `aka-packs` 本地导入相应签名 pack。Python 与 C/C++ 可导入外部预生成的 `index.scip`。Vue 仅有 Tier-0 和 `<script>` 内 TS/JS 能力，不包含 Vue SCIP pack。complete 包不包含 raw exporter 或未签名 payload。`v0.1.49` 和其他历史发布保持原样；旧 Release 记录或资产可以为配额清理，但保留 Git tag，当前 Release 永不清理。
 
 ## 通用原则
 
 - 默认搜索是 BM25；embedding 默认关闭，只有仓库所有者手动启用时才会使用。
 - 语义 pack 是可选增强。pack 不可用、超时或被跳过时，基础索引仍可发布和查询，结果会缺少该语言的部分语义关系。
-- 从 GitHub 或 Gitee 的 `aka-releases` 取得普通 `setup.exe`、`aka-headless-*.tar.gz` 及来源本地的 `SHA256SUMS`；单体 Windows complete 仅从 GitHub `aka-releases` 取得。签名 `.aka-pack`、规则包和其他非产品资产仅从 GitHub [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 取得。当前没有 Gitee packs 镜像。不要导入任意 `.zip`、`.tgz` 或 `.tar.gz` 作为 pack。
-- 从对应发布页取得的 `SHA256SUMS` 用于核对下载；Windows 更新还会在安装前校验更新签名。
+- 从 GitHub `aka-releases` 取得 Windows complete `setup.exe`、`.sig` 及 GitHub `SHA256SUMS`；从 GitHub 或 Gitee `aka-releases` 取得 Linux complete 的两个卷和下载来源对应的 `SHA256SUMS`。签名 `.aka-pack`、规则包和其他非产品资产仅从 GitHub [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 取得。当前没有 Gitee packs 镜像。不要导入任意 `.zip`、`.tgz` 或 `.tar.gz` 作为 pack。
+- 从对应发布页取得的 `SHA256SUMS` 用于核对下载；Windows 更新只读取 GitHub `latest.json` 并在安装前校验 updater 签名，Gitee `latest.json` 只用于 Linux 下载。
 
 下一步：Windows 使用者进入 [Windows 桌面版](windows-desktop.md)，Linux 管理员进入 [Linux headless 服务包](linux-headless.md)。
