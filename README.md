@@ -9,7 +9,7 @@ headless 服务包、更新元数据与使用文档。
 
 - Windows x86_64 普通 NSIS 安装包与签名；
 - Linux x86_64 普通 headless 服务包；
-- Linux x86_64 complete headless 服务包固定 `base`/`packs` 双卷；当前计划中的 `packs-v0.1.13` 叠加后内置五个已签名 upstream packs；
+- Linux x86_64 complete headless 服务包固定 `base`/`packs` 双卷；已发布的 `packs-v0.1.13` 叠加后内置五个已签名 upstream packs；
 - `SHA256SUMS` 与 `latest.json`。
 
 不发布 portable Windows 可执行文件、macOS 包、AppImage、DEB/RPM、Docker 镜像或
