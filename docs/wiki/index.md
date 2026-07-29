@@ -24,7 +24,7 @@ Wiki 面向使用者和管理员；源码构建、内部运行时和发布流水
 | Linux complete 包 | 隔离网络、受控网络，或需要在首轮索引就使用上游语义增强 | Linux complete 同版本 `base`/`packs` 两个 `aka-headless-complete-*.tar.gz`，包含 Java、Python、TypeScript/JavaScript、C/C++、Rust。两卷必须依次解压到同一目录；完整目录内置五个已签名 `.aka-pack`，不需要首次联网下载。 |
 | GitHub Windows complete 包 | Windows 隔离网络、受控网络，或需要首轮索引即使用可用的 Windows 语义增强 | GitHub 单体 `aka-desktop-complete-*-setup.exe`，不带 `.sig`；用 GitHub `SHA256SUMS` 校验，内置 Java、TypeScript/JavaScript、Rust 三个各自已签名 `.aka-pack`。Python 与 C/C++ 没有 Windows pack，仍可导入外部 `index.scip`。 |
 
-普通包不会降低数据一致性：每次成功索引都会发布同一不可变 generation 的源码、图和搜索结果。Linux complete 包只是把可选的上游语义工具预先带到离线环境；没有 pack 时仍使用内置 Rust `aka-parse`。当前计划中的 Linux complete 包含 `packs-v0.1.13` 的 Java、Python、TypeScript/JavaScript、C/C++、Rust，其中 C/C++ 使用官方 `scip-clang` v0.3.3。Linux 包最低要求 glibc 2.28。GitHub Windows complete 包含 Java、TypeScript/JavaScript、Rust；普通 Windows 包仍可按需安装或本地导入这三个 pack。Python 与 C/C++ 可导入外部预生成的 `index.scip`。Vue 仅有 Tier-0 和 `<script>` 内 TS/JS 能力，不包含 Vue SCIP pack。complete 包不包含 raw exporter 或未签名 payload。
+普通包不会降低数据一致性：每次成功索引都会发布同一不可变 generation 的源码、图和搜索结果。Linux complete 包只是把可选的上游语义工具预先带到离线环境；没有 pack 时仍使用内置 Rust `aka-parse`。已发布的 Linux complete 基线包含 `packs-v0.1.13` 的 Java、Python、TypeScript/JavaScript、C/C++、Rust，其中 C/C++ 使用官方 `scip-clang` v0.3.3。Linux 包最低要求 glibc 2.28。GitHub Windows complete 包含 Java、TypeScript/JavaScript、Rust；普通 Windows 包仍可按需安装或本地导入这三个 pack。Python 与 C/C++ 可导入外部预生成的 `index.scip`。Vue 仅有 Tier-0 和 `<script>` 内 TS/JS 能力，不包含 Vue SCIP pack。complete 包不包含 raw exporter 或未签名 payload。
 
 ## 通用原则
 
