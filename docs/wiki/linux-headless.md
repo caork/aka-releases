@@ -4,7 +4,7 @@ Linux headless 服务包面向 x86_64 GNU/Linux。它提供 REST/Web 工作区�
 
 ## 平台兼容性
 
-正式包的最低 GNU libc（glibc）基线是 **2.28**。RHEL 8 兼容发行版、Debian 10 及更高版本满足该基线；Ubuntu 20.04 及更高版本同样满足。发布时会递归检查包内每个 ELF 文件，拒绝需要高于 `GLIBC_2.28` 或 `GLIBCXX_3.4.25` 的产物；后者是 GCC 8 提供的 libstdc++ ABI 基线。服务包不捆绑 glibc 或 libstdc++，请使用受支持的发行版镜像，不要向安装目录复制系统库。
+正式包的最低 GNU libc（glibc）基线是 **2.28**。RHEL 8 兼容发行版、Debian 10 及更高版本满足该基线；Ubuntu 20.04 及更高版本同样满足。发布时会递归检查包内每个 x86_64 ELF 文件（包括嵌套归档内的 native library），拒绝需要高于 `GLIBC_2.28` 或 `GLIBCXX_3.4.25` 的产物；fat JAR 内无法在 x86_64 上加载的异构架构 ELF 会按架构记录并跳过。后者是 GCC 8 提供的 libstdc++ ABI 基线。服务包不捆绑 glibc 或 libstdc++，请使用受支持的发行版镜像，不要向安装目录复制系统库。
 
 ## 安装与本机启动
 
