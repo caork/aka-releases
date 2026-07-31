@@ -2,7 +2,7 @@
 
 ## 安装
 
-1. 在 [GitHub Releases](https://github.com/caork/aka-releases/releases) 下载当前版本的单体 Windows complete `aka-desktop-complete-*-setup.exe` 及其 detached `.sig`。未来正式发行不提供普通 Windows 安装包，Gitee 不提供 Windows 二进制。GitHub complete 内嵌 Java、TypeScript/JavaScript、Rust 的签名 packs；Python 与 C/C++ 可导入外部预生成的 `index.scip`。
+1. 在 [GitHub Releases](https://github.com/caork/aka-releases/releases) 下载当前版本的单体 Windows complete `aka-desktop-complete-*-setup.exe` 及其 detached `.sig`。未来正式发行不提供普通 Windows 安装包。GitHub complete 内嵌 Java、TypeScript/JavaScript、Rust 的签名 packs；Python 与 C/C++ 可导入外部预生成的 `index.scip`。
 2. 用 GitHub 同一 Release 的 `SHA256SUMS` 核对安装文件哈希；桌面更新也会校验 updater `.sig`。
 3. 运行 NSIS 安装程序并完成安装。正式发布只提供该安装方式。
 4. 启动 AKA，使用 **Add repository** 导入本地目录、Git 地址或 zip；索引完成后即可在 Search、Graph、Symbol 中浏览同一份 generation。
@@ -29,13 +29,13 @@
 
 打开 **Settings > Semantic packs** 可检查或安装更新的语义 pack。AKA 只从 GitHub `aka-packs` 检查可更新的语义 pack、规则包和其他非产品资产；发现更新只会提示，必须由你点击安装。
 
-GitHub Windows complete 是单体 NSIS 安装包，内置 Java、TypeScript/JavaScript、Rust 三个签名 `.aka-pack`，也是唯一的 Windows desktop updater 目标；Gitee 不提供 Windows 二进制。可从 GitHub [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 转移匹配的签名 `.aka-pack`，然后在对应语言点击 **Import local package**；当前没有 Gitee packs 镜像。选择 `.aka-pack` 本身，不要选择任意 archive。导入会校验 pack 身份、平台、文件大小、SHA-256 和 Ed25519 签名；未通过校验的文件不会安装。`v0.1.45` Windows complete、`v0.1.49` 与 `packs-v0.1.11` 派生包是已公开历史资产。
+GitHub Windows complete 是单体 NSIS 安装包，内置 Java、TypeScript/JavaScript、Rust 三个签名 `.aka-pack`，也是唯一的 Windows desktop updater 目标。可从 GitHub [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 转移匹配的签名 `.aka-pack`，然后在对应语言点击 **Import local package**。选择 `.aka-pack` 本身，不要选择任意 archive。导入会校验 pack 身份、平台、文件大小、SHA-256 和 Ed25519 签名；未通过校验的文件不会安装。`v0.1.45` Windows complete、`v0.1.49` 与 `packs-v0.1.11` 派生包是已公开历史资产。
 
 Windows 只为 Java、TypeScript/JavaScript、Rust 提供受支持 pack；Python 与 C/C++ 使用外部预生成 `index.scip` 时保留其外部 producer provenance。
 
 ## 更新
 
-AKA 在启动时检查一次，并每 30 分钟仅检查版本。桌面更新源仅为 GitHub `aka-releases`；Gitee 的 `latest.json` 仅用于 Linux 下载。发现新版本时，窗口右上角会出现更新按钮。
+AKA 在启动时检查一次，并每 30 分钟仅检查版本。桌面更新源仅为 GitHub `aka-releases`。发现新版本时，窗口右上角会出现更新按钮。
 
 点击按钮后才会下载、校验 Tauri updater 签名、安装并自动重启。AKA 不会在后台自动下载或安装更新。若更新按钮没有出现，或校验失败，请见 [更新与故障排查](maintenance.md#updates)。
 
