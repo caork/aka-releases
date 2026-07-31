@@ -4,12 +4,12 @@
 
 | 现象 | 处理方式 |
 | --- | --- |
-| Windows 没有更新按钮 | 更新检查在启动时和每 30 分钟运行一次。确认能访问 GitHub `aka-releases`，重启后等待检查完成。没有新版本时不会显示按钮。GitHub Windows complete 是唯一的 updater 目标；Gitee 不提供 Windows 二进制，且其 `latest.json` 仅用于 Linux 下载。 |
-| Windows 更新校验失败 | 不要绕过签名校验。重新从 GitHub 官方 Release 下载对应的 complete `setup.exe` 与 `.sig`，并用 GitHub `SHA256SUMS` 核对；不要改用 Gitee。 |
+| Windows 没有更新按钮 | 更新检查在启动时和每 30 分钟运行一次。确认能访问 GitHub `aka-releases`，重启后等待检查完成。没有新版本时不会显示按钮。GitHub Windows complete 是唯一的 updater 目标。 |
+| Windows 更新校验失败 | 不要绕过签名校验。重新从 GitHub 官方 Release 下载对应的 complete `setup.exe` 与 `.sig`，并用 GitHub `SHA256SUMS` 核对。 |
 | Linux 升级后无法启动 | 保留上一版 `bin/aka`，检查启动日志和 `AKA_HOME` 的访问权限。确认下载的是 Linux x86_64 headless 服务包，并先用 `/api/health` 验证新版本。 |
 | pack 显示有更新 | pack 的更新提示不会自动下载。到 **Settings > Semantic packs** 选择安装，或在离线环境导入受信 `.aka-pack`。 |
 
-不要把 Windows 安装程序、Linux 服务包和 packs 与不对应来源 Release 的 `SHA256SUMS` 混用。GitHub Windows complete 必须使用 GitHub `aka-releases` 的 `SHA256SUMS` 与 `.sig`；共享 Linux complete 资产可使用下载来源对应的清单。可选语言 packs、规则包及其 `SHA256SUMS` 仅来自 GitHub `aka-packs`，当前没有 Gitee packs 镜像。
+不要把 Windows 安装程序、Linux 服务包和 packs 与不对应 Release 的 `SHA256SUMS` 混用。GitHub Windows complete 必须使用同一 GitHub `aka-releases` Release 的 `SHA256SUMS` 与 `.sig`；Linux complete 双卷也使用该 Release 的清单。可选语言 packs、规则包及其 `SHA256SUMS` 仅来自 GitHub `aka-packs`。
 
 ## <a id="indexing"></a>索引
 
@@ -27,7 +27,7 @@
 | 现象 | 处理方式 |
 | --- | --- |
 | 导入被拒绝 | 确认选择的是签名 `.aka-pack`，不是任意 archive；确认 Pack ID、版本和平台匹配。C/C++ pack 只支持 `linux-x86_64`；Rust 选择正确的 Windows 或 Linux 目标。 |
-| 签名或哈希错误 | 产品文件从 GitHub 或 Gitee 的 `aka-releases` 重新下载，并用其 `SHA256SUMS` 核对；pack 文件仅从 GitHub `aka-packs` 重新下载，并用该 pack release 的 `SHA256SUMS` 核对。不要关闭签名校验。 |
+| 签名或哈希错误 | 产品文件从 GitHub `aka-releases` 重新下载，并用其 `SHA256SUMS` 核对；pack 文件仅从 GitHub `aka-packs` 重新下载，并用该 pack release 的 `SHA256SUMS` 核对。不要关闭签名校验。 |
 | complete 包里的 pack 无法使用 | 确认导入的是解压后的 complete 包内的已签名 `.aka-pack`，且 C/C++、Rust 文件为本机平台。校验错误时，重新下载同一 Release 的 complete 包并核对 `SHA256SUMS`。 |
 | complete 包之外需要补充 pack | 在联网机器下载签名 `.aka-pack` 和校验清单，再通过受控介质转移；在 Windows 使用 **Import local package**，在 Linux 通过受保护的 REST 管理面导入。 |
 
