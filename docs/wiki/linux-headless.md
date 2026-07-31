@@ -8,7 +8,7 @@ Linux headless 服务包面向 x86_64 GNU/Linux。它提供 REST/Web 工作区�
 
 ## 安装与本机启动
 
-从 [GitHub Releases](https://github.com/caork/aka-releases/releases) 或 [Gitee Releases](https://gitee.com/jscao/aka-releases/releases) 同时下载 complete 的同版本 `base` 与 `packs` 两个 `.tar.gz`，并用下载来源同一 Release 的 `SHA256SUMS` 校验。从下一个正式版本起，Linux 不再提供普通 `aka-headless-<版本>-x86_64-unknown-linux-gnu.tar.gz`；complete 必须先解压 `base`，再把 `packs` 解压到同一目标目录。两个卷都是真正可独立解压的 tar 包、均严格小于 95 MiB，但只有叠加后的目录才是完整产品。已发布的 upstream-only `packs-v0.1.13` 完整目录含 `bin/aka`、README、systemd 示例、`THIRD_PARTY_NOTICES.md` 与适用于 Linux x86_64 的 Java、Python、TypeScript/JavaScript、C/C++、Rust 五个签名 packs；C/C++ 使用官方 `scip-clang` v0.3.3。`packs-v0.1.11` 的派生包是已公开历史资产。
+从 [GitHub Releases](https://github.com/caork/aka-releases/releases) 同时下载 complete 的同版本 `base` 与 `packs` 两个 `.tar.gz`，并用同一 Release 的 `SHA256SUMS` 校验。Linux 不再提供普通 `aka-headless-<版本>-x86_64-unknown-linux-gnu.tar.gz`；complete 必须先解压 `base`，再把 `packs` 解压到同一目标目录。两个卷都是真正可独立解压的 tar 包、均严格小于 95 MiB，但只有叠加后的目录才是完整产品。已发布的 upstream-only `packs-v0.1.13` 完整目录含 `bin/aka`、README、systemd 示例、`THIRD_PARTY_NOTICES.md` 与适用于 Linux x86_64 的 Java、Python、TypeScript/JavaScript、C/C++、Rust 五个签名 packs；C/C++ 使用官方 `scip-clang` v0.3.3。`packs-v0.1.11` 的派生包是已公开历史资产。
 
 complete 双卷的解压方式如下；两个归档内的顶层目录名相同，第二条命令只补入其余内容：
 
@@ -78,6 +78,6 @@ curl --fail-with-body \
 
 ## 更新
 
-停掉服务、替换为同一产品 Release 解压后的 `bin/aka`，再启动服务。升级前备份 `AKA_HOME`，升级后先访问 health endpoint，再检查已注册仓库和 packs。产品更新来自 GitHub 或 Gitee 的 `aka-releases`；pack 更新来自 GitHub `aka-packs`，不使用 Gitee packs 镜像。各自使用其来源 Release 的 `SHA256SUMS` 验证。
+停掉服务、替换为同一 GitHub 产品 Release 解压后的 `bin/aka`，再启动服务。升级前备份 `AKA_HOME`，升级后先访问 health endpoint，再检查已注册仓库和 packs。产品更新来自 GitHub `aka-releases`；pack 更新来自 GitHub `aka-packs`。使用对应 Release 的 `SHA256SUMS` 验证。
 
 更多诊断步骤见 [更新与故障排查](maintenance.md)，许可文件说明见 [许可证与通知](licenses.md)。
