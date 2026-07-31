@@ -11,7 +11,7 @@ headless 服务包、更新元数据与使用文档。
 - Linux x86_64 complete headless 服务包固定 `base`/`packs` 双卷；已发布的 `packs-v0.1.13` 叠加后内置五个已签名 upstream packs；
 - GitHub 自己的 `SHA256SUMS` 与 `latest.json`。
 
-Gitee 只提供相同的 Linux `base`/`packs` 双卷及 Gitee 自己的 `SHA256SUMS` 与 `latest.json`，不提供 Windows 二进制。普通 Windows 安装包和普通 Linux headless 服务包不属于未来正式发行。
+正式产品不再发布到 Gitee。普通 Windows 安装包和普通 Linux headless 服务包不属于未来正式发行。
 
 不发布 portable Windows 可执行文件、macOS 包、AppImage、DEB/RPM、Docker 镜像或
 独立客户端配置压缩包。
@@ -23,7 +23,7 @@ Gitee 只提供相同的 Linux `base`/`packs` 双卷及 Gitee 自己的 `SHA256S
 - [更新与故障排查](docs/wiki/maintenance.md)
 - [许可证与通知](docs/wiki/licenses.md)
 
-complete 包使用内置 Rust `aka-parse`，无需额外解析器即可索引。GitHub Windows complete 是带 detached `.sig` 的 updater 目标，额外内置 Java、TypeScript/JavaScript、Rust 三个适用于 Windows 的签名 pack；请使用 GitHub `SHA256SUMS` 校验安装包，内嵌 pack 各自验签。Linux complete 内置 Java、Python、TypeScript/JavaScript、C/C++、Rust 五个适用于 Linux 的签名 pack，其中 C/C++ 固定为官方 `scip-clang` v0.3.3。Linux 服务包的最低 glibc 基线是 2.28。Windows Python 与 C/C++ 可导入外部预生成的 `index.scip`。Vue 没有 SCIP pack。GitHub 和 Gitee 各自提供与其资产对应的 `SHA256SUMS` 和 `latest.json`，但只有 GitHub `latest.json` 用于桌面更新。`v0.1.45` Windows complete、`v0.1.49` 及其他既有发布均保持不变；旧 Release 记录或资产可为配额清理，但会保留 Git tag，且当前 Release 永不清理。Linux complete 必须同时下载同版本的 `base` 与
+complete 包使用内置 Rust `aka-parse`，无需额外解析器即可索引。GitHub Windows complete 是带 detached `.sig` 的 updater 目标，额外内置 Java、TypeScript/JavaScript、Rust 三个适用于 Windows 的签名 pack；请使用 GitHub `SHA256SUMS` 校验安装包，内嵌 pack 各自验签。Linux complete 内置 Java、Python、TypeScript/JavaScript、C/C++、Rust 五个适用于 Linux 的签名 pack，其中 C/C++ 固定为官方 `scip-clang` v0.3.3。Linux 服务包的最低 glibc 基线是 2.28。Windows Python 与 C/C++ 可导入外部预生成的 `index.scip`。Vue 没有 SCIP pack。GitHub Release 提供对应的 `SHA256SUMS` 和 `latest.json`。`v0.1.45` Windows complete、`v0.1.49` 及其他既有发布均保持不变；旧 Release 记录或资产可为配额清理，但会保留 Git tag，且当前 Release 永不清理。Linux complete 必须同时下载同版本的 `base` 与
 `packs` 两个 `.tar.gz`，依次解压到同一目录；每卷严格小于 95 MiB。
 
 Windows 桌面版只从 GitHub 的 `latest.json` 检查更新；发现新版本后仅显示
