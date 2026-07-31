@@ -9,7 +9,7 @@
 | Linux 升级后无法启动 | 保留上一版 `bin/aka`，检查启动日志和 `AKA_HOME` 的访问权限。确认下载的是 Linux x86_64 headless 服务包，并先用 `/api/health` 验证新版本。 |
 | pack 显示有更新 | pack 的更新提示不会自动下载。到 **Settings > Semantic packs** 选择安装，或在离线环境导入受信 `.aka-pack`。 |
 
-不要把 Windows 安装程序、Linux 服务包和 packs 与不对应 Release 的 `SHA256SUMS` 混用。GitHub Windows complete 必须使用同一 GitHub `aka-releases` Release 的 `SHA256SUMS` 与 `.sig`；Linux complete 双卷也使用该 Release 的清单。可选语言 packs、规则包及其 `SHA256SUMS` 仅来自 GitHub `aka-packs`。
+不要把 Windows 安装程序、Linux 服务包和 packs 与不对应 Release 的 `SHA256SUMS` 混用。GitHub Windows complete 必须使用同一 GitHub `aka-releases` Release 的 `SHA256SUMS` 与 `.sig`；单一 Linux complete 包也使用该 Release 的清单。可选语言 packs、规则包及其 `SHA256SUMS` 仅来自 GitHub `aka-packs`。
 
 ## <a id="indexing"></a>索引
 
