@@ -14,9 +14,7 @@ Wiki 面向使用者和管理员；源码构建、内部运行时和发布流水
 
 ## 选择下载内容
 
-从 [GitHub Releases](https://github.com/caork/aka-releases/releases) 或
-[Gitee Releases](https://gitee.com/jscao/aka-releases/releases) 下载相同版本的正式资产。
-从下一个正式版本起，两端只共享 Linux complete 双卷；Windows complete 及其 updater `.sig` 仅在 GitHub 发布，Gitee 不提供 Windows 二进制。不要混用来源不同的文件与 `SHA256SUMS`。
+从 [GitHub Releases](https://github.com/caork/aka-releases/releases) 下载正式资产。Windows complete、其 updater `.sig` 与 Linux complete 双卷均只在 GitHub 发布；校验时使用同一 Release 的 `SHA256SUMS`。
 
 | 选择 | 适用场景 | 包含内容 |
 | --- | --- | --- |
@@ -29,7 +27,7 @@ complete 包不会降低数据一致性：每次成功索引都会发布同一�
 
 - 默认搜索是 BM25；embedding 默认关闭，只有仓库所有者手动启用时才会使用。
 - 语义 pack 是可选增强。pack 不可用、超时或被跳过时，基础索引仍可发布和查询，结果会缺少该语言的部分语义关系。
-- 从 GitHub `aka-releases` 取得 Windows complete `setup.exe`、`.sig` 及 GitHub `SHA256SUMS`；从 GitHub 或 Gitee `aka-releases` 取得 Linux complete 的两个卷和下载来源对应的 `SHA256SUMS`。签名 `.aka-pack`、规则包和其他非产品资产仅从 GitHub [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 取得。当前没有 Gitee packs 镜像。不要导入任意 `.zip`、`.tgz` 或 `.tar.gz` 作为 pack。
-- 从对应发布页取得的 `SHA256SUMS` 用于核对下载；Windows 更新只读取 GitHub `latest.json` 并在安装前校验 updater 签名，Gitee `latest.json` 只用于 Linux 下载。
+- 从 GitHub `aka-releases` 取得 Windows complete `setup.exe`、`.sig`、Linux complete 双卷及 `SHA256SUMS`。签名 `.aka-pack`、规则包和其他非产品资产仅从 GitHub [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 取得。不要导入任意 `.zip`、`.tgz` 或 `.tar.gz` 作为 pack。
+- 从对应发布页取得的 `SHA256SUMS` 用于核对下载；Windows 更新只读取 GitHub `latest.json` 并在安装前校验 updater 签名。
 
 下一步：Windows 使用者进入 [Windows 桌面版](windows-desktop.md)，Linux 管理员进入 [Linux headless 服务包](linux-headless.md)。
