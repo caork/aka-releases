@@ -8,15 +8,15 @@ Linux headless 服务包面向 x86_64 GNU/Linux。它提供 REST/Web 工作区�
 
 ## 安装与本机启动
 
-从 [GitHub Releases](https://github.com/caork/aka-releases/releases) 同时下载 complete 的同版本 `base` 与 `packs` 两个 `.tar.gz`，并用同一 Release 的 `SHA256SUMS` 校验。Linux 不再提供普通 `aka-headless-<版本>-x86_64-unknown-linux-gnu.tar.gz`；complete 必须先解压 `base`，再把 `packs` 解压到同一目标目录。两个卷都是真正可独立解压的 tar 包、均严格小于 95 MiB，但只有叠加后的目录才是完整产品。已发布的 upstream-only `packs-v0.1.13` 完整目录含 `bin/aka`、README、systemd 示例、`THIRD_PARTY_NOTICES.md` 与适用于 Linux x86_64 的 Java、Python、TypeScript/JavaScript、C/C++、Rust 五个签名 packs；C/C++ 使用官方 `scip-clang` v0.3.3。`packs-v0.1.11` 的派生包是已公开历史资产。
+从 [GitHub Releases](https://github.com/caork/aka-releases/releases) 下载单一 `aka-headless-complete-<版本>-x86_64-unknown-linux-gnu.tar.gz`，并用同一 Release 的 `SHA256SUMS` 校验。完整包内含 `bin/aka`、`start.sh`、README、systemd 示例、`THIRD_PARTY_NOTICES.md`，以及适用于 Linux x86_64 的 Java、Python、TypeScript/JavaScript、C/C++、Rust 五个签名 packs；C/C++ 使用官方 `scip-clang` v0.3.3。历史 Release 的 `base`/`packs` 双卷仍是已发布事实，但不再用于新版本。
 
-complete 双卷的解压方式如下；两个归档内的顶层目录名相同，第二条命令只补入其余内容：
+下载后一次解压并启动：
 
 ```bash
-version=0.1.50 # 替换为实际 Release 版本
-tar -xzf "aka-headless-complete-${version}-base-x86_64-unknown-linux-gnu.tar.gz"
-tar -xzf "aka-headless-complete-${version}-packs-x86_64-unknown-linux-gnu.tar.gz"
+version=0.1.61 # 替换为实际 Release 版本
+tar -xzf "aka-headless-complete-${version}-x86_64-unknown-linux-gnu.tar.gz"
 cd "aka-headless-complete-${version}-x86_64-unknown-linux-gnu"
+./start.sh
 ```
 
 确认服务：
@@ -26,7 +26,7 @@ curl --fail http://127.0.0.1:4111/api/health
 # {"status":"ok","service":"aka-server"}
 ```
 
-REST/Web 工作区地址是 `http://127.0.0.1:4111/`，MCP 地址是 `http://127.0.0.1:4112/mcp`。将 `AKA_HOME` 放在持久磁盘上；其中保存注册表、不可变 generations、CAS、搜索索引、图和受管 checkout。
+REST/Web 工作区地址是 `http://127.0.0.1:4111/`，MCP 地址是 `http://127.0.0.1:4112/mcp`。`start.sh` 默认使用 `~/.aka` 保存注册表、不可变 generations、CAS、搜索索引、图和受管 checkout；可通过 `AKA_HOME`、`AKA_ADDR`、`AKA_MCP_ADDR` 覆盖数据目录和监听地址。
 
 ## 可信网络部署
 
