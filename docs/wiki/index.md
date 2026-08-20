@@ -25,7 +25,7 @@ complete 包不会降低数据一致性：每次成功索引都会发布同一�
 
 ## 通用原则
 
-- 默认搜索是 BM25；embedding 默认关闭，只有仓库所有者手动启用时才会使用。
+- 搜索是 BM25 加 trigram 候选验证，没有向量检索，也没有需要配置的 embedding 模型。
 - 语义 pack 是可选增强。pack 不可用、超时或被跳过时，基础索引仍可发布和查询，结果会缺少该语言的部分语义关系。
 - 从 GitHub `aka-releases` 取得 Windows complete `setup.exe`、`.sig`、单一 Linux complete 包及 `SHA256SUMS`。签名 `.aka-pack`、规则包和其他非产品资产仅从 GitHub [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 取得。不要导入任意 `.zip`、`.tgz` 或 `.tar.gz` 作为 pack。
 - 从对应发布页取得的 `SHA256SUMS` 用于核对下载；Windows 更新只读取 GitHub `latest.json` 并在安装前校验 updater 签名。
