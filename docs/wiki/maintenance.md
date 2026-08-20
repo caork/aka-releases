@@ -15,12 +15,10 @@
 
 | 现象 | 处理方式 |
 | --- | --- |
-| 首次索引超过 1500 秒 | Windows 在 **Settings > Indexing** 提高时间预算，或为本次启动设置 `AKA_INDEX_MAX_SECS`。Linux 检查服务的环境变量、磁盘空间与 `AKA_HOME` 所在磁盘性能。 |
+| 首次索引跑得很久 | 索引没有时间上限，可以让它跑完；想提前收尾就在索引界面点 **Skip**，已经跑完的部分会照常发布。Linux 检查服务的环境变量、磁盘空间与 `AKA_HOME` 所在磁盘性能。 |
 | 索引只显示部分语义关系 | 基础 Rust `aka-parse` generation 已可用；检查该仓库的 Semantic packs 是否已安装、启用并满足项目运行条件。语义 pack 超时或跳过不会破坏基础索引。 |
 | Java/Python/TS/C++/Rust 结果不完整 | 检查对应 pack 与前置工具：JDK 17+、`scip-typescript` 使用 Node.js 18 或 20、Python 虚拟环境、`compile_commands.json`、Cargo/Rust toolchain。Linux Python pack 仅支持 `linux-x86_64`；Windows Python/C++ 需要外部 `index.scip`。然后重新分析仓库。 |
 | 数据看起来过旧 | 对仓库执行更新/重新分析。不要手工改动 `AKA_HOME` 下的 generation、CAS、图或索引文件。 |
-
-默认 embedding 关闭；未配置本地模型时搜索仍是 BM25。这不是索引故障。
 
 ## pack 导入
 
