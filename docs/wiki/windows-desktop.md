@@ -9,11 +9,11 @@
 
 首次分析使用内置 Rust `aka-parse`，不要求 Java、Python、Node.js、C/C++ 或 Rust 工具链。对于单纯的导航、全文代码搜索和图浏览，complete 包同样可直接使用。
 
-## 索引时间预算
+## 索引时长
 
-默认索引时间预算是 **1500 秒（25 分钟）**。在 **Settings > Indexing** 中调整它；最低 10 秒，最高 24 小时。也可在一次启动前设置 `AKA_INDEX_MAX_SECS` 临时覆盖该全局设置。
+索引没有时间上限，跑到结束为止；设置里也不再有时间预算这一项。需要提前收尾时，在索引界面点 **Skip**：AKA 会结束剩余的可选语义分析，并把已经跑完的部分作为一个 generation 发布。自动化场景仍可在启动前设置 `AKA_INDEX_MAX_SECS` 给单次运行加一个硬上限。
 
-大仓库第一次索引可能接近预算。遇到预算耗尽时，先阅读 [故障排查](maintenance.md#indexing)；不要反复删除应用数据。安装了语义 pack 的仓库若某项增强超时，基础 generation 仍会保持可用，界面会标记缺少的可选能力。
+大仓库第一次索引可能很久。跑得异常慢时先阅读 [故障排查](maintenance.md#indexing)；不要反复删除应用数据。安装了语义 pack 的仓库若某项增强被跳过，基础 generation 仍会保持可用，界面会标记缺少的可选能力。
 
 ## Java、TypeScript、Rust packs 与外部 SCIP
 
