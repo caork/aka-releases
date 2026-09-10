@@ -9,6 +9,7 @@ Wiki 面向使用者和管理员；源码构建、内部运行时和发布流水
 | --- | --- |
 | 在一台 Windows 电脑上浏览、索引和搜索代码 | [Windows 桌面版](windows-desktop.md) |
 | 在 Linux 主机上为团队提供 REST、Web 工作区和 MCP | [Linux headless 服务包](linux-headless.md) |
+| 评审一次合并，判断改动还会牵动哪些代码和测试 | [变更影响分析](change-impact-analysis.md) |
 | 更新失败、索引变慢、pack 无法导入或需要离线部署 | [更新与故障排查](maintenance.md) |
 | 需要确认第三方许可与通知 | [许可证与通知](licenses.md) |
 
