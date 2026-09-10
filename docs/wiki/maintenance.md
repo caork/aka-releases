@@ -17,14 +17,14 @@
 | --- | --- |
 | 首次索引跑得很久 | 索引没有时间上限，可以让它跑完；想提前收尾就在索引界面点 **Skip**，已经跑完的部分会照常发布。Linux 检查服务的环境变量、磁盘空间与 `AKA_HOME` 所在磁盘性能。 |
 | 索引只显示部分语义关系 | 基础 Rust `aka-parse` generation 已可用；检查该仓库的 Semantic packs 是否已安装、启用并满足项目运行条件。语义 pack 超时或跳过不会破坏基础索引。 |
-| Java/Python/TS/C++/Rust 结果不完整 | 检查对应 pack 与前置工具：JDK 17+、`scip-typescript` 使用 Node.js 18 或 20、Python 虚拟环境、`compile_commands.json`、Cargo/Rust toolchain。Linux Python pack 仅支持 `linux-x86_64`；Windows Python/C++ 需要外部 `index.scip`。然后重新分析仓库。 |
+| Java/Python/TS/C++/Rust 结果不完整 | 检查对应 pack 与前置工具：JDK 17+、`scip-typescript` 使用 Node.js 18 或 20、Python 虚拟环境、`compile_commands.json`、Cargo/Rust toolchain。Linux Python pack 有 `linux-x86_64` 与 `linux-aarch64` 两个目标；Windows Python/C++ 需要外部 `index.scip`。然后重新分析仓库。 |
 | 数据看起来过旧 | 对仓库执行更新/重新分析。不要手工改动 `AKA_HOME` 下的 generation、CAS、图或索引文件。 |
 
 ## pack 导入
 
 | 现象 | 处理方式 |
 | --- | --- |
-| 导入被拒绝 | 确认选择的是签名 `.aka-pack`，不是任意 archive；确认 Pack ID、版本和平台匹配。C/C++ pack 只支持 `linux-x86_64`；Rust 选择正确的 Windows 或 Linux 目标。 |
+| 导入被拒绝 | 确认选择的是签名 `.aka-pack`，不是任意 archive；确认 Pack ID、版本和平台匹配。C/C++ pack 只支持 `linux-x86_64`；Rust 有 `linux-x86_64`、`windows-x86_64` 与 `linux-aarch64` 三个目标，选择与本机一致的那个。 |
 | 签名或哈希错误 | 产品文件从 GitHub `aka-releases` 重新下载，并用其 `SHA256SUMS` 核对；pack 文件仅从 GitHub `aka-packs` 重新下载，并用该 pack release 的 `SHA256SUMS` 核对。不要关闭签名校验。 |
 | complete 包里的 pack 无法使用 | 确认导入的是解压后的 complete 包内的已签名 `.aka-pack`，且 C/C++、Rust 文件为本机平台。校验错误时，重新下载同一 Release 的 complete 包并核对 `SHA256SUMS`。 |
 | complete 包之外需要补充 pack | 在联网机器下载签名 `.aka-pack` 和校验清单，再通过受控介质转移；在 Windows 使用 **Import local package**，在 Linux 通过受保护的 REST 管理面导入。 |
