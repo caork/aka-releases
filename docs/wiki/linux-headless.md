@@ -46,20 +46,21 @@ AKA_HOME=/var/lib/aka aka serve \
 
 ## 远程 REST 管理与管理员密码
 
-远程 REST 的导入、更新、删除、设置和 pack 管理默认关闭。需要从 Web 工作区管理仓库时，必须**同时**启用远程管理开关和设置有效的 Argon2id PHC 哈希：
+浏览、搜索、查询不需要密码。导入、更新、删除、设置和 pack 管理这些写操作，在没有管理员密码时只接受本机 loopback 请求。启动时给一个密码，远程管理即开放：
 
 ```bash
-AKA_ALLOW_REMOTE_ADMIN=1 \
-AKA_ADMIN_PASSWORD_HASH='$argon2id$v=19$<salt>$<hash>' \
+AKA_ADMIN_PASSWORD='管理员要输入的密码' \
 AKA_HOME=/var/lib/aka aka serve \
   --addr 0.0.0.0:4111 \
   --mcp-addr 127.0.0.1:4112 \
   --public-base-url https://aka.example.internal
 ```
 
-`--allow-remote-admin` 与 `AKA_ALLOW_REMOTE_ADMIN=1` 等价。开关存在但哈希不是有效 Argon2id PHC 时，服务会拒绝启动。使用团队的密码/密钥管理工具生成哈希，并仅将哈希交给服务管理器的受保护环境；不要将明文密码或哈希写入命令历史、JSON、仓库或 unit 文件。
+门户以固定用户名 `admin` 加这个密码发送 Basic 认证。**密码随每个管理请求一起走网络**：网络不可信时必须在这个端口前面终止 TLS，明文 HTTP 下任何能抓包的人都能读到它。密码放服务管理器的受保护环境（`EnvironmentFile=`），不要写进 unit 文件、JSON、仓库或命令历史。
 
-门户只会在 **HTTPS** 或 loopback HTTP 下显示和发送管理员密码，远程明文 HTTP 不允许输入密码。管理员认证仅保护 REST 管理面 `:4111`；它**不保护** `:4112/mcp`。MCP 仍可执行分析、导入、更新和自动索引，因此应只绑定可信网络，或在它前面放置独立的认证网关。
+不希望明文出现在环境里的部署，仍可改用 `AKA_ADMIN_PASSWORD_HASH` 提供 Argon2id PHC 哈希；两者只能设一个。`--allow-remote-admin` 与 `AKA_ALLOW_REMOTE_ADMIN` 仍被接受但已无作用——密码本身就是开关。
+
+管理员认证仅保护 REST 管理面 `:4111`；它**不保护** `:4112/mcp`。MCP 仍可执行分析、导入、更新和自动索引，因此应只绑定可信网络，或在它前面放置独立的认证网关。
 
 ## complete 包的离线 packs
 
