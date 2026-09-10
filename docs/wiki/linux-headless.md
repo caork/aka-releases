@@ -64,7 +64,7 @@ AKA_HOME=/var/lib/aka aka serve \
 
 ## complete 包的离线 packs
 
-headless 服务包内置 Rust `aka-parse`，即使没有可选 pack 也能索引和查询。已发布的 upstream-only complete 基线带有 `packs-v0.1.13` 的 Java、Python、TypeScript/JavaScript、C/C++、Rust 适用签名 `.aka-pack`；C/C++ 使用官方 `scip-clang` v0.3.3。Vue 仅有 Tier-0 和 `<script>` 内 TS/JS 能力。首次运行 `aka serve` 时会自动校验并导入，后续启动会幂等跳过相同版本，无需访问下载站或手工调用导入接口。单个 pack 导入失败不会阻止服务启动或基础索引，可用 `GET /api/semantic-packs` 查看状态。需要更换或补充 pack 时，可在联网机器从 GitHub [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 下载所需 `.aka-pack`，连同该 pack release 的 `SHA256SUMS` 一起转移到目标主机；当前没有 Gitee packs 镜像。
+headless 服务包内置 Rust `aka-parse`，即使没有可选 pack 也能索引和查询。已发布的 upstream-only complete 基线带有 `packs-v0.1.14` 的 Java、Python、TypeScript/JavaScript、C/C++、Rust 适用签名 `.aka-pack`；C/C++ 使用官方 `scip-clang` v0.3.3。Vue 仅有 Tier-0 和 `<script>` 内 TS/JS 能力。首次运行 `aka serve` 时会自动校验并导入，后续启动会幂等跳过相同版本，无需访问下载站或手工调用导入接口。单个 pack 导入失败不会阻止服务启动或基础索引，可用 `GET /api/semantic-packs` 查看状态。需要更换或补充 pack 时，可在联网机器从 GitHub [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 下载所需 `.aka-pack`，连同该 pack release 的 `SHA256SUMS` 一起转移到目标主机；当前没有 Gitee packs 镜像。
 
 手工导入 Java pack 的示例如下；将 `java` 和文件名替换为其他语言的 Pack ID 与对应文件。默认 complete 包不需要执行此步骤。服务只接受与内置合同、目标平台和 Pack ID 匹配的已签名文件。
 
@@ -75,7 +75,7 @@ curl --fail-with-body \
   http://127.0.0.1:4111/api/semantic-packs/java/import
 ```
 
-用 `GET /api/semantic-packs` 查看状态。远程主机执行此操作时适用上一节的 REST 管理认证。选择 `.aka-pack`，不要导入任意 `.zip`、`.tgz` 或 `.tar.gz` 作为 pack。Python、C/C++ 与 Rust 选择 `linux-x86_64`；Java、TypeScript/JavaScript 使用 `any-any`。Vue 没有 SCIP pack。
+用 `GET /api/semantic-packs` 查看状态。远程主机执行此操作时适用上一节的 REST 管理认证。选择 `.aka-pack`，不要导入任意 `.zip`、`.tgz` 或 `.tar.gz` 作为 pack。正式发行的 Linux x86_64 服务包对 Python、C/C++ 与 Rust 选择 `linux-x86_64`；Java、TypeScript/JavaScript 使用 `any-any`。`packs-v0.1.14` 另有 Python 与 Rust 的 `linux-aarch64` pack，只在自建的 aarch64 环境上导入；C/C++ 没有 aarch64 pack，Vue 没有 SCIP pack。
 
 ## 更新
 
