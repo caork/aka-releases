@@ -8,14 +8,14 @@ Linux headless 服务包面向 x86_64 GNU/Linux。它提供 REST/Web 工作区�
 
 ## 安装与本机启动
 
-从 [GitHub Releases](https://github.com/caork/aka-releases/releases) 下载单一 `aka-headless-complete-<版本>-x86_64-unknown-linux-gnu.tar.gz`，并用同一 Release 的 `SHA256SUMS` 校验。完整包内含 `bin/aka`、`start.sh`、README、systemd 示例、`THIRD_PARTY_NOTICES.md`，以及适用于 Linux x86_64 的 Java、Python、TypeScript/JavaScript、C/C++、Rust 五个签名 packs；C/C++ 使用官方 `scip-clang` v0.3.3。历史 Release 的 `base`/`packs` 双卷仍是已发布事实，但不再用于新版本。
+从 [GitHub Releases](https://github.com/caork/aka-releases/releases) 下载单一 `aka-<版本>-linux-x86_64.tar.gz`，并用同一 Release 的 `SHA256SUMS` 校验。完整包内含 `bin/aka`、`start.sh`、README、systemd 示例、`THIRD_PARTY_NOTICES.md`，以及适用于 Linux x86_64 的 Java、Python、TypeScript/JavaScript、C/C++、Rust 五个签名 packs；C/C++ 使用官方 `scip-clang` v0.3.3。历史 Release 的 `base`/`packs` 双卷仍是已发布事实，但不再用于新版本。
 
 下载后一次解压并启动：
 
 ```bash
 version=0.1.61 # 替换为实际 Release 版本
-tar -xzf "aka-headless-complete-${version}-x86_64-unknown-linux-gnu.tar.gz"
-cd "aka-headless-complete-${version}-x86_64-unknown-linux-gnu"
+tar -xzf "aka-${version}-linux-x86_64.tar.gz"
+cd "aka-${version}-linux-x86_64"
 ./start.sh
 ```
 
