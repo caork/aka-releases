@@ -15,10 +15,12 @@
 
 | 现象 | 处理方式 |
 | --- | --- |
-| 首次索引跑得很久 | 索引没有时间上限，可以让它跑完；想提前收尾就在索引界面点 **Skip**，已经跑完的部分会照常发布。Linux 检查服务的环境变量、磁盘空间与 `AKA_HOME` 所在磁盘性能。 |
+| 首次索引跑得很久 | 索引默认没有时间上限，可以让它跑完；想提前收尾就在索引界面点 **Skip**，已经跑完的部分会照常发布。Linux 检查服务的环境变量、磁盘空间与 `AKA_HOME` 所在磁盘性能。 |
 | 索引只显示部分语义关系 | 基础 Rust `aka-parse` generation 已可用；检查该仓库的 Semantic packs 是否已安装、启用并满足项目运行条件。语义 pack 超时或跳过不会破坏基础索引。 |
 | Java/Python/TS/C++/Rust 结果不完整 | 检查对应 pack 与前置工具：JDK 17+、`scip-typescript` 使用 Node.js 18 或 20、Python 虚拟环境、`compile_commands.json`、Cargo/Rust toolchain。Linux Python pack 有 `linux-x86_64` 与 `linux-aarch64` 两个目标；Windows Python/C++ 需要外部 `index.scip`。然后重新分析仓库。 |
 | 数据看起来过旧 | 对仓库执行更新/重新分析。不要手工改动 `AKA_HOME` 下的 generation、CAS、图或索引文件。 |
+
+三个索引侧的调节项既可以写在 `$AKA_HOME/settings.json`，也可以用同名环境变量；两者都给出时环境变量优先，便于自动化脚本只影响单次运行。`indexMaxSecs` / `AKA_INDEX_MAX_SECS` 是单次索引的硬上限（秒）；`searchWriterThreads` / `AKA_SEARCH_WRITER_THREADS` 与 `searchWriterMemMb` / `AKA_SEARCH_WRITER_MEM_MB` 是搜索索引写入端的线程数与每线程内存（MiB）。不写或写 `0` 表示用默认档；超出支持范围的值会被夹到边界，写入端内存峰值始终是线程数乘每线程预算，不随仓库规模增长。
 
 ## pack 导入
 
