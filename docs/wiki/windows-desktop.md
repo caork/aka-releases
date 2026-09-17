@@ -9,9 +9,31 @@
 
 首次分析使用内置 Rust `aka-parse`，不要求 Java、Python、Node.js、C/C++ 或 Rust 工具链。对于单纯的导航、全文代码搜索和图浏览，complete 包同样可直接使用。
 
+## 索引与数据的存放位置
+
+桌面版把全部运行时数据放在当前用户的应用数据目录下，不写入安装目录，也不需要管理员权限：
+
+```text
+%APPDATA%\com.aka.desktop\aka-home\
+  registry.json                  项目注册表
+  settings.json                  全局设置
+  toolchains\                    已安装的语义 pack 与受管运行时
+  checkouts\                     从 Git 地址导入时的受管工作副本
+  repos\<项目名>-<哈希>\
+    current                      当前 generation 的指针
+    generations\<id>\            不可变索引世代：图、搜索索引、布局
+    cas\                         世代间共享的源码快照
+```
+
+哈希取自项目的绝对路径，所以同名但位于不同路径的两个项目不会互相覆盖。整个目录可以整体备份；不要手工改动里面的 generation、CAS、图或搜索索引文件。移除项目请在界面里操作，删除整个目录相当于重置所有索引。
+
+需要把数据放到别的磁盘时，在启动 AKA 之前设置环境变量 `AKA_HOME` 指向目标目录。日志另外存放，优先写安装目录下的 `logs\aka-desktop.log`，该目录不可写时回落到 `%APPDATA%\com.aka.desktop\logs`。
+
 ## 索引时长
 
-索引没有时间上限，跑到结束为止；设置里也不再有时间预算这一项。需要提前收尾时，在索引界面点 **Skip**：AKA 会结束剩余的可选语义分析，并把已经跑完的部分作为一个 generation 发布。自动化场景仍可在启动前设置 `AKA_INDEX_MAX_SECS` 给单次运行加一个硬上限。
+索引默认没有时间上限，跑到结束为止；设置界面里也没有时间预算这一项。需要提前收尾时，在索引界面点 **Skip**：AKA 会结束剩余的可选语义分析，并把已经跑完的部分作为一个 generation 发布。
+
+需要固定的硬上限时，在 `$AKA_HOME/settings.json` 写 `"indexMaxSecs": <秒>`（不写这一项，或写 `0`，就是没有上限；有效范围 10–86400 秒，超出会被夹到边界并给出提示）。自动化场景仍可用环境变量 `AKA_INDEX_MAX_SECS` 给单次运行加上限，它优先于 `settings.json` 里的值。
 
 大仓库第一次索引可能很久。跑得异常慢时先阅读 [故障排查](maintenance.md#indexing)；不要反复删除应用数据。安装了语义 pack 的仓库若某项增强被跳过，基础 generation 仍会保持可用，界面会标记缺少的可选能力。
 
