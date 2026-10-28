@@ -8,7 +8,7 @@ Linux headless 服务包面向 x86_64 GNU/Linux。它提供 REST/Web 工作区�
 
 ## 安装与本机启动
 
-从 [GitHub Releases](https://github.com/caork/aka-releases/releases) 下载单一 `aka-<版本>-linux-x86_64.tar.gz`，并用同一 Release 的 `SHA256SUMS` 校验。完整包内含 `bin/aka`、`start.sh`、README、systemd 示例、`THIRD_PARTY_NOTICES.md`，以及适用于 Linux x86_64 的 Java、Python、TypeScript/JavaScript、C/C++、Rust 五个签名 packs；C/C++ 使用官方 `scip-clang` v0.3.3。历史 Release 的 `base`/`packs` 双卷仍是已发布事实，但不再用于新版本。
+从 [GitHub Releases](https://github.com/caork/aka-releases/releases) 下载单一 `aka-<版本>-linux-x86_64.tar.gz`，并用同一 Release 的 `SHA256SUMS` 校验。完整包内含 `bin/aka`、`start.sh`、README、systemd 示例、`THIRD_PARTY_NOTICES.md`，以及适用于 Linux x86_64 的 Java、Python、TypeScript/JavaScript、C/C++、Rust 五个签名 packs；C/C++ 使用官方 `scip-clang` v0.3.3。历史 Release 的 `base`/`packs` 双卷仍是已发布事实，但不再用于新版本。同一 Release 还附带 PDF 用户手册 `aka-<版本>-user-guide.pdf`，适合随服务包一起转移到隔离网络阅读，同样用该 `SHA256SUMS` 校验。
 
 下载后一次解压并启动：
 
