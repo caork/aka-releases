@@ -3,7 +3,7 @@
 ## 安装
 
 1. 在 [GitHub Releases](https://github.com/caork/aka-releases/releases) 下载当前版本的单体 Windows complete `aka-<ver>-windows-x86_64-setup.exe` 及其 detached `.sig`。未来正式发行不提供普通 Windows 安装包。GitHub complete 内嵌 Java、TypeScript/JavaScript、Rust 的签名 packs；Python 与 C/C++ 可导入外部预生成的 `index.scip`。
-2. 用 GitHub 同一 Release 的 `SHA256SUMS` 核对安装文件哈希；桌面更新也会校验 updater `.sig`。
+2. 用 GitHub 同一 Release 的 `SHA256SUMS` 核对安装文件哈希；桌面更新也会校验 updater `.sig`。同一 Release 附带的 PDF 用户手册 `aka-<ver>-user-guide.pdf` 与本 Wiki 内容一致，可离线阅读，也由该 `SHA256SUMS` 覆盖。
 3. 运行 NSIS 安装程序并完成安装。正式发布只提供该安装方式。
 4. 启动 AKA，使用 **Add repository** 导入本地目录、Git 地址或 zip；索引完成后即可在 Search、Graph、Symbol 中浏览同一份 generation。
 
