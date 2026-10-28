@@ -65,4 +65,6 @@ AKA 在启动时检查一次，并每 30 分钟仅检查版本。桌面更新源
 
 桌面版运行时，本机 MCP 地址为 `http://127.0.0.1:4112/mcp`。将支持 Streamable HTTP MCP 的开发工具连接到这个地址，即可复用桌面版创建的索引；不要把该本机地址直接暴露到不可信网络。
 
+桌面版启动时会自动检测本机的 Claude Code、Codex、OpenCode 与 Code Agent，为它们安装或更新 AKA 的 MCP 配置和 `aka-code-graph` skill，详见 [AI 编码助手接入](agent-integration.md)。
+
 有关许可、第三方 notice 和 MIT 派生来源的说明，见 [许可证与通知](licenses.md)。
