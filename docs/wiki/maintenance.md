@@ -35,11 +35,10 @@
 
 | 现象 | 处理方式 |
 | --- | --- |
-| 远程 REST 写操作返回拒绝 | 默认只允许 loopback 管理。需要远程管理时，同时配置 `AKA_ALLOW_REMOTE_ADMIN=1`（或 `--allow-remote-admin`）与有效 `AKA_ADMIN_PASSWORD_HASH` Argon2id PHC。 |
-| 管理员密码表单不可用 | 远程访问必须使用 HTTPS；明文 HTTP 不会发送密码。确认 `--public-base-url` 是 HTTPS 的公开地址。 |
-| MCP 可访问但 REST 管理仍被拒绝 | 这是预期的独立保护边界。REST 管理密码不保护 MCP；为 `:4112/mcp` 限制网络访问，或部署独立认证网关。 |
+| 远程 REST 写操作返回拒绝 | 默认只允许 loopback 管理。需要远程管理时，以 `aka serve --allow-remote-admin` 重启服务；AKA 不设密码，对外暴露时在前面加认证网关。 |
+| MCP 可访问但 REST 管理仍被拒绝 | 这是预期的独立边界：`--allow-remote-admin` 只管 REST 管理面。为 `:4112/mcp` 限制网络访问，或部署独立认证网关。 |
 | 门户给出的地址不正确 | 在反向代理或端口映射部署中设置 `--public-base-url` / `--public-mcp-url`，或等价环境变量。 |
 
 ## 收集信息
 
-寻求支持时，提供产品版本、操作系统、发生时间、已采取的步骤、错误信息和是否使用 pack。不要发送管理员密码、Argon2id 哈希、访问令牌、`AKA_HOME` 的完整内容或私有源码。Linux 管理员可提供服务日志中已脱敏的相关片段。
+寻求支持时，提供产品版本、操作系统、发生时间、已采取的步骤、错误信息和是否使用 pack。不要发送访问令牌、`AKA_HOME` 的完整内容或私有源码。Linux 管理员可提供服务日志中已脱敏的相关片段。
