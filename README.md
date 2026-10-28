@@ -5,11 +5,12 @@ headless 服务包、更新元数据与使用文档。
 
 ## 下载
 
-从 [Releases](../../releases) 获取当前版本。自 `v0.1.61` 起，GitHub 提供：
+从 [Releases](../../releases) 获取当前版本。每个正式 Release 固定提供以下六个资产：
 
 - Windows x86_64 complete NSIS 安装包及 detached updater `.sig`；
 - 单一 Linux x86_64 complete headless 服务包；一次解压后运行 `./start.sh` 即可启动，并内置五个已签名 upstream packs；
-- GitHub 自己的 `SHA256SUMS` 与 `latest.json`。
+- PDF 用户手册 `aka-<版本>-user-guide.pdf`，内容与下方使用说明一致，便于离线阅读和分发；
+- GitHub 自己的 `SHA256SUMS` 与 `latest.json`。`SHA256SUMS` 覆盖安装包、`.sig`、Linux 服务包与 PDF 用户手册。
 
 正式产品不再发布到 Gitee。普通 Windows 安装包和普通 Linux headless 服务包不属于未来正式发行。
 
