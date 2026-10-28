@@ -16,12 +16,13 @@ Wiki 面向使用者和管理员；源码构建、内部运行时和发布流水
 
 ## 选择下载内容
 
-从 [GitHub Releases](https://github.com/caork/aka-releases/releases) 下载正式资产。Windows complete、其 updater `.sig` 与单一 Linux complete 包均只在 GitHub 发布；校验时使用同一 Release 的 `SHA256SUMS`。
+从 [GitHub Releases](https://github.com/caork/aka-releases/releases) 下载正式资产。每个正式 Release 固定包含六个资产：Windows complete 安装包、其 updater `.sig`、单一 Linux complete 包、PDF 用户手册 `aka-<ver>-user-guide.pdf`、`SHA256SUMS` 与 `latest.json`，均只在 GitHub 发布；校验时使用同一 Release 的 `SHA256SUMS`，它覆盖安装包、`.sig`、Linux 包与 PDF 用户手册。
 
 | 选择 | 适用场景 | 包含内容 |
 | --- | --- | --- |
 | Linux complete 包 | 隔离网络、受控网络，或需要在首轮索引就使用上游语义增强 | 单一 `aka-<ver>-linux-x86_64.tar.gz`，内置 Java、Python、TypeScript/JavaScript、C/C++、Rust 五个已签名 `.aka-pack`；一次解压后运行 `./start.sh` 即可启动，不需要首次联网下载。 |
 | GitHub Windows complete 包 | Windows 用户 | GitHub 单体 `aka-<ver>-windows-x86_64-setup.exe` 及 detached `.sig`；用 GitHub `SHA256SUMS` 校验，内置 Java、TypeScript/JavaScript、Rust 三个各自已签名 `.aka-pack`。Python 与 C/C++ 没有 Windows pack，仍可导入外部 `index.scip`。 |
+| PDF 用户手册 | 离线阅读、打印，或随内网部署一起分发使用说明 | 单一 `aka-<ver>-user-guide.pdf`，由本 Wiki 生成，与同版本产品对应；不含任何可执行内容。 |
 
 complete 包不会降低数据一致性：每次成功索引都会发布同一不可变 generation 的源码、图和搜索结果。Linux complete 包只是把可选的上游语义工具预先带到离线环境；没有 pack 时仍使用内置 Rust `aka-parse`。已发布的 Linux complete 基线包含 `packs-v0.1.14` 的 Java、Python、TypeScript/JavaScript、C/C++、Rust，其中 C/C++ 使用官方 `scip-clang` v0.3.3。`packs-v0.1.14` 另外发布 Python 与 Rust 的 `linux-aarch64` pack，供自建 aarch64 环境使用；正式发行仍只有 Windows 桌面版和 Linux x86_64 headless 服务包，没有 aarch64 产品包。Linux 包最低要求 glibc 2.28。GitHub Windows complete 包含 Java、TypeScript/JavaScript、Rust；需要更换或补充时可从 GitHub `aka-packs` 本地导入相应签名 pack。Python 与 C/C++ 可导入外部预生成的 `index.scip`。Vue 仅有 Tier-0 和 `<script>` 内 TS/JS 能力，不包含 Vue SCIP pack。complete 包不包含 raw exporter 或未签名 payload。`v0.1.49` 和其他历史发布保持原样；旧 Release 记录或资产可以为配额清理，但保留 Git tag，当前 Release 永不清理。
 
@@ -29,7 +30,7 @@ complete 包不会降低数据一致性：每次成功索引都会发布同一�
 
 - 搜索是 BM25 加 trigram 候选验证，没有向量检索，也没有需要配置的 embedding 模型。
 - 语义 pack 是可选增强。pack 不可用、超时或被跳过时，基础索引仍可发布和查询，结果会缺少该语言的部分语义关系。
-- 从 GitHub `aka-releases` 取得 Windows complete `setup.exe`、`.sig`、单一 Linux complete 包及 `SHA256SUMS`。签名 `.aka-pack`、规则包和其他非产品资产仅从 GitHub [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 取得。不要导入任意 `.zip`、`.tgz` 或 `.tar.gz` 作为 pack。
+- 从 GitHub `aka-releases` 取得 Windows complete `setup.exe`、`.sig`、单一 Linux complete 包、PDF 用户手册及 `SHA256SUMS`。签名 `.aka-pack`、规则包和其他非产品资产仅从 GitHub [AKA Packs Releases](https://github.com/caork/aka-packs/releases) 取得。不要导入任意 `.zip`、`.tgz` 或 `.tar.gz` 作为 pack。
 - 从对应发布页取得的 `SHA256SUMS` 用于核对下载；Windows 更新只读取 GitHub `latest.json` 并在安装前校验 updater 签名。
 
 下一步：Windows 使用者进入 [Windows 桌面版](windows-desktop.md)，Linux 管理员进入 [Linux headless 服务包](linux-headless.md)。
